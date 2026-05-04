@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookDucks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="themes.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="home.html" class="nav-logo">
+      <img src="logo.png" alt="BookDucks"/>
+    </a>
+    <div class="nav-links">
+      <span id="nav-username" class="nav-user"></span>
+      <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">My Profile</a>
+      <a href="#" id="nav-logout" class="btn-ghost" style="display:none">Logout</a>
+      <a href="login.html" id="nav-login" class="btn-primary">Login</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Your next favourite<br/>book is here 🦆</h1>
+      <p class="hero-sub">Discover, save, and rate books you love</p>
+    </div>
+  </section>
+
+  <!-- BOOKS SECTION -->
+  <main class="container">
+    <div class="section-header">
+      <h2 class="section-title">All Books</h2>
+      <span class="section-count" id="book-count"></span>
+    </div>
+
+    <div id="books-grid" class="books-grid">
+      <!-- cards injected by home.js -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </main>
+
+  <!-- ADMIN PANEL (VG) — hidden unless isAdmin -->
+  <section id="admin-panel" class="admin-panel" style="display:none">
+    <div class="container">
+      <h2 class="section-title">Admin Panel</h2>
+      <p>Upload new books here (VG feature — coming soon)</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>🦆 BookDucks — Read more, quack more</p>
+  </footer>
+
+  <script src="api.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>

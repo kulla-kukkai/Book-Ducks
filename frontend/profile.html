@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — BookDucks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="themes.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="home.html" class="nav-logo">
+      <img src="logo.png" alt="BookDucks" height="44" />
+    </a>
+    <div class="nav-links">
+      <span id="nav-username" class="nav-user"></span>
+      <a href="#" id="nav-logout" class="btn-ghost" onclick="logout()">Logout</a>
+    </div>
+  </nav>
+
+  <!-- PROFILE HEADER -->
+  <section class="profile-header">
+    <div class="container">
+      <div class="profile-avatar" id="profile-avatar">🦆</div>
+      <h1 class="profile-name" id="profile-name">Loading...</h1>
+      <p class="profile-email" id="profile-email"></p>
+    </div>
+  </section>
+
+  <!-- ATT LÄSA LIST -->
+  <main class="container">
+    <div class="section-header">
+      <h2 class="section-title">Att läsa 📚</h2>
+      <div class="sort-controls">
+        <span class="sort-label">Sort by:</span>
+        <button class="sort-btn active" onclick="sortList('title')">Title</button>
+        <button class="sort-btn" onclick="sortList('author')">Author</button>
+      </div>
+    </div>
+
+    <div id="reading-list" class="books-grid">
+      <!-- injected by profile.js -->
+    </div>
+
+    <!-- VG: Rated Books -->
+    <div class="section-header" style="margin-top: 3rem">
+      <h2 class="section-title">Rated Books ⭐</h2>
+      <div class="sort-controls">
+        <span class="sort-label">Sort by:</span>
+        <button class="sort-btn active" onclick="sortRated('title')">Title</button>
+        <button class="sort-btn" onclick="sortRated('author')">Author</button>
+        <button class="sort-btn" onclick="sortRated('rating')">Rating</button>
+      </div>
+    </div>
+
+    <div id="rated-list" class="books-grid">
+      <!-- injected by profile.js -->
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>🦆 BookDucks — Read more, quack more</p>
+  </footer>
+
+  <script src="api.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
