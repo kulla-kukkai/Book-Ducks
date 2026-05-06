@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BookDucks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="themes.css" />
 </head>
@@ -27,36 +28,42 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <h1 class="hero-title">Your next favourite<br/>book is here 🦆</h1>
-      <p class="hero-sub">Discover, save, and rate books you love</p>
+      <p class="hero-tag">Welcome, fellow duck</p>
+      <h1 class="hero-title">What the duck<br/>are you reading?</h1>
+      <p class="hero-sub">Find your next obsession — or just quack around</p>
     </div>
   </section>
 
-  <!-- BOOKS SECTION -->
-  <main class="container">
-    <div class="section-header">
-      <h2 class="section-title">All Books</h2>
-      <span class="section-count" id="book-count"></span>
+  <!-- BOOKS SECTION — stripe-bg อยู่ตรงนี้ -->
+  <section class="books-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">All Books</h2>
+        <span class="section-count" id="book-count"></span>
+      </div>
+      <div id="books-grid" class="books-grid">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
     </div>
+  </section>
 
-    <div id="books-grid" class="books-grid">
-      <!-- cards injected by home.js -->
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-    </div>
-  </main>
-
-  <!-- ADMIN PANEL (VG) — hidden unless isAdmin -->
+  <!-- ADMIN PANEL (VG) -->
   <section id="admin-panel" class="admin-panel" style="display:none">
     <div class="container">
       <h2 class="section-title">Admin Panel</h2>
       <p>Upload new books here (VG feature — coming soon)</p>
     </div>
   </section>
+  
 
+  <!-- FOOTER — เป็ดลอยอยู่เหนือ ข้อความอยู่ใน footer ตามปกติ -->
   <footer class="footer">
+    <div class="duck-banner">
+      <img src="duck-banner.png" alt="BookDucks family" />
+    </div>
     <p>🦆 BookDucks — Read more, quack more</p>
   </footer>
 

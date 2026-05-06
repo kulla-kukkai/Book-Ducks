@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login — BookDucks</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="themes.css" />
 </head>
@@ -21,46 +22,72 @@
   <!-- AUTH CARD -->
   <main class="auth-container">
     <div class="auth-card">
-
-      <!-- TABS: Login / Register -->
+ 
+      <!-- TABS -->
       <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
-        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
+        <button class="auth-tab active" id="tab-login"    onclick="switchTab('login')">Login</button>
+        <button class="auth-tab"        id="tab-register" onclick="switchTab('register')">Register</button>
       </div>
-
-      <!-- ERROR MESSAGE -->
-      <div id="auth-error" class="error-msg" style="display:none"></div>
-
-      <!-- LOGIN FORM -->
+ 
+      <!-- ERROR / SUCCESS MESSAGE -->
+      <div id="auth-error" style="display:none; margin-bottom:0.75rem; font-size:0.85rem;"></div>
+ 
+      <!-- ══════════════════════════════════════════
+           LOGIN FORM
+      ══════════════════════════════════════════ -->
       <div id="form-login">
+ 
         <div class="form-group">
-          <label>Email</label>
+          <label for="login-email">Email</label>
           <input type="email" id="login-email" placeholder="your@email.com" />
         </div>
+ 
         <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="login-password" placeholder="••••••••" />
+          <label for="login-password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="login-password" placeholder="••••••••" />
+            <button class="pw-toggle" id="toggle-login-pw" type="button" aria-label="Show password">SHOW</button>
+          </div>
         </div>
-        <button class="btn-primary btn-full" onclick="handleLogin()">Login</button>
+ 
+        <button class="btn-primary btn-full" id="login-btn" onclick="handleLogin()">Login</button>
+ 
       </div>
-
-      <!-- REGISTER FORM -->
+ 
+      <!-- ══════════════════════════════════════════
+           REGISTER FORM
+      ══════════════════════════════════════════ -->
       <div id="form-register" style="display:none">
+ 
         <div class="form-group">
-          <label>Username</label>
+          <label for="reg-username">Username</label>
           <input type="text" id="reg-username" placeholder="ducklover99" />
         </div>
+ 
         <div class="form-group">
-          <label>Email</label>
+          <label for="reg-email">Email</label>
           <input type="email" id="reg-email" placeholder="your@email.com" />
         </div>
+ 
         <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="reg-password" placeholder="••••••••" />
+          <label for="reg-password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="reg-password" placeholder="••••••••" />
+            <button class="pw-toggle" id="toggle-reg-pw" type="button" aria-label="Show password">SHOW</button>
+          </div>
+ 
+          <!-- RULES — เปลี่ยนสีเขียวเมื่อผ่าน -->
+          <ul class="pw-rules">
+            <li id="rule-length">At least 8 characters</li>
+            <li id="rule-upper">At least one capital letter</li>
+            <li id="rule-number">At least one number</li>
+          </ul>
         </div>
-        <button class="btn-primary btn-full" onclick="handleRegister()">Create Account</button>
+ 
+        <button class="btn-primary btn-full" id="register-btn" onclick="handleRegister()">Create Account</button>
+ 
       </div>
-
+ 
     </div>
   </main>
 
