@@ -1,134 +1,91 @@
-// home.js — โหลดหนังสือและ navbar
-
-// อัปเดต navbar ตาม login state
+// ── Navbar แสดง username / ปุ่ม login ──
 function updateNav() {
   const user = getUser()
-  if (user) {
-    document.getElementById("nav-username").textContent = `Hi, ${user.username}!`
-    document.getElementById("nav-profile").style.display = "inline"
-    document.getElementById("nav-logout").style.display = "inline"
-    document.getElementById("nav-login").style.display = "none"
-
-    // VG: แสดง admin panel ถ้าเป็น admin
-    if (isAdmin()) {
-      document.getElementById("admin-panel").style.display = "block"
-    }
+  const navUsername = document.getElementById("nav-username")
+  const navProfile  = document.getElementById("nav-profile")
+  const navLogout   = document.getElementById("nav-logout")
+  const navLogin    = document.getElementById("nav-login")
+ 
+  if (isLoggedIn() && user) {
+    navUsername.textContent = `Hi, ${user.username} 🦆`
+    if (navProfile) navProfile.style.display  = "inline-block"
+    if (navLogout)  navLogout.style.display   = "inline-block"
+    if (navLogin)   navLogin.style.display    = "none"
+  }
+  if (isAdmin()) {
+    const adminPanel = document.getElementById("admin-panel")
+    if (adminPanel) adminPanel.style.display = "block"
   }
 }
-
-// ดึงหนังสือทั้งหมดจาก Strapi
+ 
+// ── Logout ──
+const logoutBtn = document.getElementById("nav-logout")
+if (logoutBtn) logoutBtn.addEventListener("click", (e) => {
+  e.preventDefault()
+  logout()
+})
+ 
+// ── โหลดหนังสือ ──
 async function loadBooks() {
   try {
-    const res = await apiGet("/books?populate=cover")
-    const books = res.data
-
-    const grid = document.getElementById("books-grid")
+    // sort createdAt desc, limit 10 — เล่มใหม่สุด
+    const res = await apiGet("/books?populate=cover&sort=createdAt:desc&pagination[limit]=10")
+    const books = res.data || []
+ 
     const countEl = document.getElementById("book-count")
-
-    if (!books || books.length === 0) {
-      grid.innerHTML = "<p>No books found — add some in Strapi Admin!</p>"
+    if (countEl) countEl.textContent = `${books.length} books`
+ 
+    const grid = document.getElementById("books-grid")
+    if (!books.length) {
+      grid.innerHTML = `<p style="color:var(--color-text-muted)">No books yet — add some in Strapi!</p>`
       return
     }
-
-    countEl.textContent = `${books.length} books`
-
-    grid.innerHTML = books.map(book => {
-      const { title, author, pages, publishedDate, cover, averageRating } = book
-
-      // สร้าง URL รูปปก
-      const coverUrl = cover?.url
-        ? `http://localhost:1337${cover.url}`
-        : null
-
-      // แสดง rating ถ้ามี
-      const ratingHtml = averageRating
-        ? `<p class="book-rating">★ ${averageRating.toFixed(1)}</p>`
-        : ""
-
-      return `
-        <div class="book-card">
-          ${coverUrl
-            ? `<img class="book-cover" src="${coverUrl}" alt="${title}" />`
-            : `<div class="book-cover" style="display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>`
-          }
-          <div class="book-info">
-            <h3 class="book-title">${title}</h3>
-            <p class="book-author">${author}</p>
-            ${ratingHtml}
-            <p class="book-meta">${pages ? pages + " pages" : ""}</p>
-            <div class="book-actions">
-              <button class="btn-icon" onclick="saveBook(${book.id}, this)">
-                + Att läsa
-              </button>
-            </div>
-          </div>
-        </div>
-      `
-    }).join("")
-
+ 
+    grid.innerHTML = books.map(book => renderCard(book)).join("")
   } catch (err) {
-    console.error("Error:", err)
-    document.getElementById("books-grid").innerHTML = `
-      <p style="color:red">
-        Cannot connect to Strapi — make sure it's running on localhost:1337
-      </p>
-    `
+    console.error("Load error:", err)
+    document.getElementById("books-grid").innerHTML =
+      `<p style="color:crimson">Cannot connect to Strapi — make sure it's running on localhost:1337</p>`
   }
 }
-
-// บันทึกหนังสือใน Att läsa
-async function saveBook(bookId, btn) {
-  if (!isLoggedIn()) {
-    alert("Please login first!")
-    window.location.href = "login.html"
-    return
-  }
-
-  try {
-    btn.textContent = "Saving..."
-    btn.disabled = true
-
-    const user = getUser()
-
-    // ดึง reading list ของ user ก่อน
-    const res = await apiGet(`/reading-lists?filters[users_permissions_user][id][$eq]=${user.id}&populate=books`)
-    const lists = res.data
-
-    if (lists && lists.length > 0) {
-      // มี reading list อยู่แล้ว — เพิ่มหนังสือเข้าไป
-      const listId = lists[0].id
-      const existingBooks = lists[0].attributes.books?.data || []
-      const bookIds = existingBooks.map(b => b.id)
-
-      if (bookIds.includes(bookId)) {
-        btn.textContent = "✓ Saved"
-        btn.classList.add("saved")
-        return
-      }
-
-      await apiPut(`/reading-lists/${listId}`, {
-        data: { books: [...bookIds, bookId] }
-      })
-    } else {
-      // ยังไม่มี reading list — สร้างใหม่
-      await apiPost("/reading-lists", {
-        data: {
-          books: [bookId],
-          users_permissions_user: user.id
-        }
-      })
-    }
-
-    btn.textContent = "✓ Saved"
-    btn.classList.add("saved")
-
-  } catch (err) {
-    console.error("Save error:", err)
-    btn.textContent = "Error"
-    btn.disabled = false
-  }
+ 
+// ── Render การ์ดหนังสือ ──
+function renderCard(book) {
+  const title     = book.title    || "Untitled"
+  const author    = book.author   || ""
+  const pages     = book.pages    || ""
+  const coverUrl  = book.cover?.url ? `http://localhost:1337${book.cover.url}` : null
+  const avgRating = book.avgRating || null
+ 
+  const starsHtml = avgRating
+    ? `<p class="book-rating">${renderStars(avgRating)} <span style="font-size:11px;color:var(--color-text-muted)">${avgRating.toFixed(1)}</span></p>`
+    : ""
+ 
+  return `
+    <div class="book-card" onclick="location.href='book-detail.html?id=${book.documentId}'" style="cursor:pointer">
+      ${coverUrl
+        ? `<img class="book-cover" src="${coverUrl}" alt="${title}" />`
+        : `<div class="book-cover book-cover-placeholder">📖</div>`}
+      <div class="book-info">
+        <h3 class="book-title">${title}</h3>
+        <p class="book-author">${author}</p>
+        ${starsHtml}
+        <p class="book-meta">${pages ? pages + " pages" : ""}</p>
+      </div>
+    </div>
+  `
 }
-
-// เริ่มทำงาน
+ 
+// ── Star renderer (0–5) ──
+function renderStars(rating, max = 5) {
+  let html = ""
+  for (let i = 1; i <= max; i++) {
+    if (rating >= i)          html += `<span class="star star-full">★</span>`
+    else if (rating >= i - 0.5) html += `<span class="star star-half">½</span>`
+    else                        html += `<span class="star star-empty">☆</span>`
+  }
+  return html
+}
+ 
 updateNav()
 loadBooks()

@@ -34,6 +34,9 @@
         "videos",
         "audios"
       ]
+    },
+    "ratings": {
+      "type": "json"
     }
   }
 }

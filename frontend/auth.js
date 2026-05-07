@@ -1,6 +1,5 @@
 // ============================================================
 // auth.js — Login & Register สำหรับ BookDucks
-// ใช้ Strapi v5 ผ่าน api.js
 // ============================================================
 
 // ── redirect ถ้า login อยู่แล้ว ──
@@ -8,24 +7,12 @@ if (isLoggedIn()) {
   location.href = "home.html"
 }
 
-// ── helper แสดง/ซ่อน error ──
 function showError(msg, isSuccess = false) {
   const el = document.getElementById("auth-error")
   if (!el) return
   el.textContent   = msg
   el.style.display = msg ? "block" : "none"
-  el.style.color   = isSuccess ? "var(--accent)" : "crimson"
-}
-
-// ============================================================
-// TOGGLE PASSWORD SHOW/HIDE
-// ============================================================
-function togglePassword(inputId, btn) {
-  const input = document.getElementById(inputId)
-  if (!input) return
-  const isHidden = input.type === "password"
-  input.type  = isHidden ? "text" : "password"
-  btn.textContent = isHidden ? "HIDE" : "SHOW"
+  el.style.color   = isSuccess ? "var(--color-accent)" : "crimson"
 }
 
 // ============================================================
@@ -53,36 +40,31 @@ function switchTab(tab) {
 }
 
 // ============================================================
-// PASSWORD VALIDATION RULES (register)
-// เช็ค real-time ขณะพิมพ์
+// TOGGLE PASSWORD
+// ============================================================
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId)
+  if (!input) return
+  const isHidden  = input.type === "password"
+  input.type      = isHidden ? "text" : "password"
+  btn.textContent = isHidden ? "🙈" : "👁️"
+}
+
+// ============================================================
+// PASSWORD RULES
 // ============================================================
 function checkPasswordRules(password) {
   const rules = [
-    {
-      id:    "rule-length",
-      label: "At least 8 characters",
-      pass:  password.length >= 8,
-    },
-    {
-      id:    "rule-upper",
-      label: "At least one capital letter",
-      pass:  /[A-Z]/.test(password),
-    },
-    {
-      id:    "rule-number",
-      label: "At least one number",
-      pass:  /[0-9]/.test(password),
-    },
+    { id: "rule-length", pass: password.length >= 8 },
+    { id: "rule-upper",  pass: /[A-Z]/.test(password) },
+    { id: "rule-number", pass: /[0-9]/.test(password) },
   ]
-
   rules.forEach(({ id, pass }) => {
     const el = document.getElementById(id)
     if (!el) return
     el.classList.toggle("rule-pass", pass)
     el.classList.toggle("rule-fail", !pass)
   })
-
-  // return true ถ้าผ่านหมดทุกข้อ
   return rules.every(r => r.pass)
 }
 
@@ -105,21 +87,28 @@ async function handleLogin() {
   btn.textContent = "Logging in..."
 
   try {
+    // Step 1: login → ได้ jwt
     const res = await apiPost("/auth/local", {
       identifier: email,
       password:   password,
     })
 
+    // Step 2: เก็บ token ก่อน
     localStorage.setItem("token", res.jwt)
-    localStorage.setItem("user", JSON.stringify(res.user))
 
-    // ดึง /users/me เพื่อให้ได้ isAdmin field
+    // Step 3: ดึง /users/me เพื่อให้ได้ username + isAdmin
     const me = await apiGet("/users/me")
-    localStorage.setItem("user", JSON.stringify(me))
 
+    // Guard: ถ้า me ไม่มี id แปลว่าได้ error object มา
+    if (!me?.id) throw new Error("Could not load user profile")
+
+    localStorage.setItem("user", JSON.stringify(me))
     location.href = "home.html"
 
   } catch (err) {
+    // ล้าง token ที่อาจเก็บไปแล้วถ้า /users/me fail
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
     showError(err.message || "Invalid email or password.")
     btn.disabled    = false
     btn.textContent = "Login"
@@ -145,10 +134,7 @@ async function handleRegister() {
     showError("Please enter a valid email.")
     return
   }
-
-  // เช็ค password rules ทั้งหมด
-  const rulesOk = checkPasswordRules(password)
-  if (!rulesOk) {
+  if (!checkPasswordRules(password)) {
     showError("Password doesn't meet all requirements.")
     return
   }
@@ -157,15 +143,9 @@ async function handleRegister() {
   btn.textContent = "Creating account..."
 
   try {
-    await apiPost("/auth/local/register", {
-      username: username,
-      email:    email,
-      password: password,
-    })
-
+    await apiPost("/auth/local/register", { username, email, password })
     switchTab("login")
     showError("✓ Account created! Please log in.", true)
-
   } catch (err) {
     showError(err.message || "Registration failed. Try a different email.")
     btn.disabled    = false
@@ -177,27 +157,12 @@ async function handleRegister() {
 // INIT
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
-  // toggle password buttons
-  const toggleLogin = document.getElementById("toggle-login-pw")
-  if (toggleLogin) {
-    toggleLogin.addEventListener("click", () => togglePassword("login-password", toggleLogin))
-  }
+  document.getElementById("toggle-login-pw")
+    ?.addEventListener("click", function() { togglePassword("login-password", this) })
+  document.getElementById("toggle-reg-pw")
+    ?.addEventListener("click", function() { togglePassword("reg-password", this) })
+  document.getElementById("reg-password")
+    ?.addEventListener("input", e => checkPasswordRules(e.target.value))
 
-  const toggleReg = document.getElementById("toggle-reg-pw")
-  if (toggleReg) {
-    toggleReg.addEventListener("click", () => togglePassword("reg-password", toggleReg))
-  }
-
-  // real-time password validation
-  const regPwInput = document.getElementById("reg-password")
-  if (regPwInput) {
-    regPwInput.addEventListener("input", () => checkPasswordRules(regPwInput.value))
-  }
-
-  // เปิด tab ตาม URL hash
-  if (location.hash === "#register") {
-    switchTab("register")
-  } else {
-    switchTab("login")
-  }
+  switchTab(location.hash === "#register" ? "register" : "login")
 })

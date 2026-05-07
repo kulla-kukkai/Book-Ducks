@@ -1,65 +1,42 @@
 const BASE_URL = "http://localhost:1337/api"
 
-// to get token from localStorage
 const getToken = () => localStorage.getItem("token")
+const getUser  = () => JSON.parse(localStorage.getItem("user") || "null")
+const isLoggedIn = () => {
+  const token = getToken()
+  return !!token && token !== "undefined" && token !== "null"
+}
+const isAdmin  = () => getUser()?.isAdmin === true
 
-// to get user from localStorage
-const getUser = () => JSON.parse(localStorage.getItem("user") || "null")
-
-// to check if user is logged in
-const isLoggedIn = () => !!getToken()
-
-// to check if user is admin
-const isAdmin = () => getUser()?.isAdmin === true
-
-// to create headers for request
 const getHeaders = () => {
-    const headers = { "Content-Type": "application/json" }
-    const token = getToken()
-    if (token) headers["Authorization"] = `Bearer ${token}`
-    return headers
+  const headers = { "Content-Type": "application/json" }
+  const token = getToken()
+  if (token && token !== "undefined") headers["Authorization"] = `Bearer ${token}`
+  return headers
 }
 
-// GET request
-const apiGet = async (path) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
-        headers: getHeaders()
-    })
-    return res.json()
+// ── fetch wrapper ที่ throw ถ้า response ไม่ ok ──
+const apiFetch = async (path, options = {}) => {
+  const res  = await fetch(`${BASE_URL}${path}`, {
+    ...options,
+    headers: getHeaders(),
+  })
+  const data = await res.json()
+  if (!res.ok) {
+    // ดึง message จาก Strapi error format
+    const msg = data?.error?.message || `HTTP ${res.status}`
+    throw new Error(msg)
+  }
+  return data
 }
 
-// POST request
-const apiPost = async (path, body) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
-        method: "POST",
-        headers: getHeaders(),
-        body: JSON.stringify(body)
-    })
-    return res.json()
-}
+const apiGet    = (path)        => apiFetch(path)
+const apiPost   = (path, body)  => apiFetch(path, { method: "POST",   body: JSON.stringify(body) })
+const apiPut    = (path, body)  => apiFetch(path, { method: "PUT",    body: JSON.stringify(body) })
+const apiDelete = (path)        => apiFetch(path, { method: "DELETE" })
 
-// PUT request
-const apiPut = async (path, body) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
-        method: "PUT",
-        headers: getHeaders(),
-        body: JSON.stringify(body)
-    })
-    return res.json()
-}
-
-// DELETE request
-const apiDelete = async (path) => {
-    const res = await fetch(`${BASE_URL}${path}`, {
-        method: "DELETE",
-        headers: getHeaders()
-    })
-    return res.json()
-}
-
-// logout
 const logout = () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
-    window.location.href = "home.html"
+  localStorage.removeItem("token")
+  localStorage.removeItem("user")
+  window.location.href = "home.html"
 }

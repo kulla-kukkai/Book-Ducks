@@ -452,6 +452,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     pages: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     publishedDate: Schema.Attribute.Date;
+    ratings: Schema.Attribute.JSON;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
