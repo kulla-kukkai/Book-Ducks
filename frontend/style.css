@@ -181,11 +181,90 @@ input  { font-family: var(--font-body); }
     color: var(--color-text-muted);
 }
 
-/* BOOKS GRID */
-.books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1.5rem;
+/* CAROUSEL */
+.carousel-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE */
+  padding: 0.5rem 0.25rem 1rem;
+  cursor: grab;
+}
+.carousel-track::-webkit-scrollbar { display: none; } /* Chrome */
+.carousel-track.dragging { cursor: grabbing; scroll-behavior: auto; }
+
+/* ปุ่มซ้าย/ขวา */
+.carousel-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: var(--shadow-md);
+  font-size: 22px;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  z-index: 10;
+}
+.carousel-btn:hover {
+  background: var(--color-accent);
+  color: white;
+  transform: scale(1.08);
+}
+.carousel-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 0.75rem;
+}
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-border);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  padding: 0;
+}
+.carousel-dot.active {
+  background: var(--color-accent);
+  width: 20px;
+  border-radius: 4px;
+}
+
+/* BOOK CARD — fixed width ใน carousel */
+.book-card {
+  flex-shrink: 0;
+  width: 180px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+}
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
 }
 
 /* BOOK CARD */

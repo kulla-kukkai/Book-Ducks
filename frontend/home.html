@@ -34,21 +34,32 @@
     </div>
   </section>
 
-  <!-- BOOKS SECTION — stripe-bg อยู่ตรงนี้ -->
-  <section class="books-section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">All Books</h2>
-        <span class="section-count" id="book-count"></span>
-      </div>
-      <div id="books-grid" class="books-grid">
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-      </div>
+<!-- BOOKS SECTION -->
+<main class="books-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">All Books</h2>
+      <span class="section-count" id="book-count"></span>
     </div>
-  </section>
+
+    <!-- carousel wrapper -->
+    <div class="carousel-wrap">
+      <button class="carousel-btn prev" id="btn-prev">‹</button>
+      <div class="carousel-track" id="books-grid">
+        <!-- cards injected by home.js -->
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+      <button class="carousel-btn next" id="btn-next">›</button>
+    </div>
+
+    <!-- dots -->
+    <div class="carousel-dots" id="carousel-dots"></div>
+  </div>
+</main>
 
   <!-- ADMIN PANEL (VG) -->
   <section id="admin-panel" class="admin-panel" style="display:none">
