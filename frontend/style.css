@@ -151,6 +151,24 @@ input  { font-family: var(--font-body); }
     text-shadow: 0 1px 6px rgba(0,0,0,0.2);
 }
 
+.btn-cta {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    background: var(--color-accent);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 500;
+    transition: all var(--transition);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    opacity: 0.9;
+}
+
 /* BOOKS SECTION — stripe-bg */
 .books-section {
     background-color: #ffeca9;

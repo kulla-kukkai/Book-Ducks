@@ -1,0 +1,123 @@
+/* ============================================
+   books.css — หน้า All Books เท่านั้น
+   ============================================ */
+
+/* PAGE HEADER */
+.page-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 2.5rem 2rem 2rem;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.page-sub {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* FILTERS BAR */
+.filters-bar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.875rem 0;
+  position: sticky;
+  top: 72px;   /* ต่ำกว่า navbar */
+  z-index: 50;
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* SEARCH */
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.875rem;
+  flex: 1;
+  max-width: 320px;
+  transition: border-color var(--transition);
+}
+.search-wrap:focus-within {
+  border-color: var(--color-accent);
+}
+.search-icon { font-size: 14px; }
+.search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: var(--color-text);
+  width: 100%;
+}
+.search-input::placeholder { color: var(--color-text-muted); }
+
+/* SORT */
+.sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sort-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* BOOKS GRID — override เป็น grid ปกติ (ไม่ใช่ carousel) */
+.books-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  overflow: visible !important;
+  flex-direction: unset !important;
+}
+
+/* NO COVER placeholder */
+.book-cover.no-cover {
+  width: 100%;
+  aspect-ratio: 2/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: var(--color-accent-light);
+}
+
+/* rating muted */
+.book-rating.muted {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ACTIVE NAV LINK */
+.active-link {
+  color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 4rem 0;
+}
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 15px; color: var(--color-text-muted); }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .filters-inner { flex-direction: column; align-items: flex-start; }
+  .search-wrap { max-width: 100%; }
+  .books-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .page-title { font-size: 1.75rem; }
+}

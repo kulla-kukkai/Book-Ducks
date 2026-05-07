@@ -1,51 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book Detail — BookDucks</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="themes.css" />
-  <link rel="stylesheet" href="book-detail.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Book Detail — BookDucks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="themes.css" />
+    <link rel="stylesheet" href="book-detail.css" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="home.html" class="nav-logo">
-      <img src="logo.png" alt="BookDucks"/>
-    </a>
-    <div class="nav-links">
-      <span id="nav-username" class="nav-user"></span>
-      <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">My Profile</a>
-      <a href="#" id="nav-logout" class="btn-ghost" style="display:none">Logout</a>
-      <a href="login.html" id="nav-login" class="btn-primary">Login</a>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-logo">
+        <img src="logo.png" alt="BookDucks"/>
+        </a>
+        <div class="nav-links">
+        <span id="nav-username" class="nav-user"></span>
+        <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">My Profile</a>
+        <a href="/frontend/books.html" class="btn-ghost">All Books</a>
+        <a href="#" id="nav-logout" class="btn-ghost" style="display:none">Logout</a>
+        <a href="login.html" id="nav-login" class="btn-primary">Login</a>
+        </div>
+    </nav>
+
+    <!-- BACK LINK -->
+    <a href="home.html" class="back-link">← Back to books</a>
+
+    <!-- SKELETON -->
+    <div class="detail-skeleton" id="detail-skeleton">
+        <div class="skel-cover"></div>
+        <div>
+        <div class="skel-line" style="width:60%;height:2.5rem;margin-bottom:1rem"></div>
+        <div class="skel-line" style="width:40%"></div>
+        <div class="skel-line" style="width:40%"></div>
+        <div class="skel-line" style="width:80%;margin-top:1rem"></div>
+        <div class="skel-line" style="width:90%"></div>
+        <div class="skel-line" style="width:70%"></div>
+        </div>
     </div>
-  </nav>
 
-  <!-- BACK LINK -->
-  <a href="home.html" class="back-link">← Back to books</a>
+    <!-- DETAIL CONTENT (filled by JS) -->
+    <div class="detail-wrapper" id="detail-content" style="display:none"></div>
 
-  <!-- SKELETON -->
-  <div class="detail-skeleton" id="detail-skeleton">
-    <div class="skel-cover"></div>
-    <div>
-      <div class="skel-line" style="width:60%;height:2.5rem;margin-bottom:1rem"></div>
-      <div class="skel-line" style="width:40%"></div>
-      <div class="skel-line" style="width:40%"></div>
-      <div class="skel-line" style="width:80%;margin-top:1rem"></div>
-      <div class="skel-line" style="width:90%"></div>
-      <div class="skel-line" style="width:70%"></div>
-    </div>
-  </div>
-
-  <!-- DETAIL CONTENT (filled by JS) -->
-  <div class="detail-wrapper" id="detail-content" style="display:none"></div>
-
-  <script src="api.js"></script>
-  <script src="book-detail.js"></script>
+    <script src="api.js"></script>
+    <script src="book-detail.js"></script>
 </body>
 </html>
