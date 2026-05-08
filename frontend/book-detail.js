@@ -35,56 +35,59 @@ function starsHtml(rating, max = 5) {
     return h
 }
 
+// ── Helper: ดึง reading list ของ user ──
+async function getMyReadingList() {
+  const res = await apiGet(`/reading-lists?populate[books][fields]=id`)
+  // Strapi จะ return แค่ list ของ user ที่ login อยู่ (ถ้าเปิด permission ถูกต้อง)
+  return res.data?.[0] || null
+}
+
 // ── Check if book is already saved ──
-async function isSaved(bookId) {
-    if (!isLoggedIn()) return false
-    try {
-        const user = getUser()
-        const res  = await apiGet(`/reading-lists?filters[users_permissions_user][id][$eq]=${user.id}&populate=books`)
-        const list = res.data?.[0]
-        if (!list) return false
-        return (list.books || []).some(b => b.id == bookId)
-    } catch { return false }
+async function isSaved(bookDocId) {
+  if (!isLoggedIn()) return false
+  try {
+    const list = await getMyReadingList()
+    if (!list) return false
+    return (list.books || []).some(b => b.documentId == bookDocId)
+  } catch { return false }
 }
 
 // ── Save / unsave book ──
-async function handleSave(bookId, btn) {
-    if (!isLoggedIn()) { location.href = "login.html"; return }
+async function handleSave(bookDocId, btn) {
+  if (!isLoggedIn()) { location.href = "login.html"; return }
 
-    btn.disabled = true
-    btn.textContent = "Saving..."
+  btn.disabled = true
+  btn.textContent = "Saving..."
 
-    try {
-        const user = getUser()
-        const res  = await apiGet(`/reading-lists?filters[users_permissions_user][id][$eq]=${user.id}&populate=books`)
-        const list = res.data?.[0]
+  try {
+    const list = await getMyReadingList()
 
-        if (list) {
-        const existingIds = (list.books || []).map(b => b.id)
-        if (existingIds.includes(Number(bookId))) {
-            btn.textContent = "✓ Saved to reading list"
-            btn.classList.add("saved-state")
-            btn.disabled = false
-            return
-        }
-        await apiPut(`/reading-lists/${list.id}`, {
-            data: { books: [...existingIds, Number(bookId)] }
-        })
-        } else {
-        await apiPost("/reading-lists", {
-            data: { books: [Number(bookId)], users_permissions_user: user.id }
-        })
-        }
-
+    if (list) {
+      const existingIds = (list.books || []).map(b => b.documentId)
+      if (existingIds.includes(bookDocId)) {
         btn.textContent = "✓ Saved to reading list"
         btn.classList.add("saved-state")
         btn.disabled = false
-
-    } catch (err) {
-        console.error(err)
-        btn.textContent = "Error — try again"
-        btn.disabled = false
+        return
+      }
+      await apiPut(`/reading-lists/${list.documentId}`, {
+        data: { books: [...existingIds, bookDocId] }
+      })
+    } else {
+      await apiPost("/reading-lists", {
+        data: { books: [bookDocId] }
+      })
     }
+
+    btn.textContent = "✓ Saved to reading list"
+    btn.classList.add("saved-state")
+    btn.disabled = false
+
+  } catch (err) {
+    console.error(err)
+    btn.textContent = "Error — try again"
+    btn.disabled = false
+  }
 }
 
 // ── Submit rating ──

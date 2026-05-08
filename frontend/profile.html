@@ -15,12 +15,14 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="home.html" class="nav-logo">
-      <img src="logo.png" alt="BookDucks" height="44" />
+        <img src="logo.png" alt="BookDucks" height="44" />
     </a>
     <div class="nav-links">
-      <span id="nav-username" class="nav-user"></span>
-      <a href="/frontend/books.html" class="btn-ghost">All Books</a>
-      <a href="#" id="nav-logout" class="btn-ghost" onclick="logout()">Logout</a>
+        <a href="books.html" class="btn-ghost">All Books</a>
+        <span id="nav-username" class="nav-user"></span>
+        <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">My Profile</a>
+        <a href="#" id="nav-logout" class="btn-ghost" style="display:none" onclick="logout()">Logout</a>
+        <a href="login.html" id="nav-login" class="btn-primary">Login</a>
     </div>
   </nav>
 
@@ -68,6 +70,7 @@
     <p>🦆 BookDucks — Read more, quack more</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="api.js"></script>
   <script src="profile.js"></script>
 </body>

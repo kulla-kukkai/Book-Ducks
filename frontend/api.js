@@ -1,42 +1,74 @@
 const BASE_URL = "http://localhost:1337/api"
 
-const getToken = () => localStorage.getItem("token")
-const getUser  = () => JSON.parse(localStorage.getItem("user") || "null")
-const isLoggedIn = () => {
-  const token = getToken()
-  return !!token && token !== "undefined" && token !== "null"
-}
-const isAdmin  = () => getUser()?.isAdmin === true
+// ── Token helpers ──
+const getToken   = () => localStorage.getItem("token")
+const getUser    = () => JSON.parse(localStorage.getItem("user") || "null")
+const isLoggedIn = () => !!getToken() && getToken() !== "null"
+const isAdmin    = () => getUser()?.isAdmin === true
 
-const getHeaders = () => {
-  const headers = { "Content-Type": "application/json" }
-  const token = getToken()
-  if (token && token !== "undefined") headers["Authorization"] = `Bearer ${token}`
-  return headers
-}
-
-// ── fetch wrapper ที่ throw ถ้า response ไม่ ok ──
-const apiFetch = async (path, options = {}) => {
-  const res  = await fetch(`${BASE_URL}${path}`, {
-    ...options,
-    headers: getHeaders(),
-  })
-  const data = await res.json()
-  if (!res.ok) {
-    // ดึง message จาก Strapi error format
-    const msg = data?.error?.message || `HTTP ${res.status}`
-    throw new Error(msg)
-  }
-  return data
+// ── GET ──
+const apiGet = async (path) => {
+    try {
+        let response = await axios.get(`${BASE_URL}${path}`, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        console.log(err)
+        throw new Error(err.response?.data?.error?.message || err.message)
+    }
 }
 
-const apiGet    = (path)        => apiFetch(path)
-const apiPost   = (path, body)  => apiFetch(path, { method: "POST",   body: JSON.stringify(body) })
-const apiPut    = (path, body)  => apiFetch(path, { method: "PUT",    body: JSON.stringify(body) })
-const apiDelete = (path)        => apiFetch(path, { method: "DELETE" })
+// ── POST ──
+const apiPost = async (path, body) => {
+    try {
+        let response = await axios.post(`${BASE_URL}${path}`, body, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        console.log(err)
+        throw new Error(err.response?.data?.error?.message || err.message)
+    }
+}
 
+// ── PUT ──
+const apiPut = async (path, body) => {
+    try {
+        let response = await axios.put(`${BASE_URL}${path}`, body, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        console.log(err)
+        throw new Error(err.response?.data?.error?.message || err.message)
+    }
+}
+
+// ── DELETE ──
+const apiDelete = async (path) => {
+    try {
+        let response = await axios.delete(`${BASE_URL}${path}`, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        console.log(err)
+        throw new Error(err.response?.data?.error?.message || err.message)
+    }
+}
+
+// ── Logout ──
 const logout = () => {
-  localStorage.removeItem("token")
-  localStorage.removeItem("user")
-  window.location.href = "home.html"
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    window.location.href = "home.html"
 }
