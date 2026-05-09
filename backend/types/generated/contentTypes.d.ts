@@ -513,9 +513,7 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    theme: Schema.Attribute.Enumeration<
-      ['christmas', 'valentine', 'halloween']
-    >;
+    theme: Schema.Attribute.Enumeration<['christmas', 'halloween']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
