@@ -1,22 +1,27 @@
-// ── Navbar แสดง username / ปุ่ม login ──
 function updateNav() {
     const user = getUser()
     const navUsername = document.getElementById("nav-username")
     const navProfile  = document.getElementById("nav-profile")
     const navLogout   = document.getElementById("nav-logout")
     const navLogin    = document.getElementById("nav-login")
-    
+    const navAdmin    = document.getElementById("nav-admin")
+
     if (isLoggedIn() && user) {
-        navUsername.textContent = `Hi, ${user.username} 🦆`
-        if (navProfile) navProfile.style.display  = "inline-block"
-        if (navLogout)  navLogout.style.display   = "inline-block"
-        if (navLogin)   navLogin.style.display    = "none"
+        navUsername.textContent = `Hi, ${user.username} `
+        if (navLogout) navLogout.style.display = "inline-block"
+        if (navLogin)  navLogin.style.display  = "none"
+
+        if (isAdmin()) {
+            if (navAdmin)   navAdmin.style.display   = "inline-block"
+            if (navProfile) navProfile.style.display = "none"
+            // แสดง admin panel section
+            const adminPanel = document.getElementById("admin-panel")
+            if (adminPanel) adminPanel.style.display = "block"
+        } else {
+            if (navProfile) navProfile.style.display = "inline-block"
+        }
     }
-    if (isAdmin()) {
-        const adminPanel = document.getElementById("admin-panel")
-        if (adminPanel) adminPanel.style.display = "block"
-    }
-    }
+}
     
 // ── Logout ──
 const logoutBtn = document.getElementById("nav-logout")
@@ -88,6 +93,7 @@ function renderStars(rating, max = 5) {
     return html
 }
 
+loadTheme()
 updateNav()
 loadBooks()
 

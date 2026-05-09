@@ -1,0 +1,23 @@
+/* === CHRISTMAS === */
+body.christmas {
+    --color-bg:           #FFF8F8;
+    --color-surface:      #FFFFFF;
+    --color-border:       #F5C5C5;
+    --color-text:         #1C1C1A;
+    --color-text-muted:   #9A8880;
+    --color-accent:       #C0392B;
+    --color-accent-light: #FDECEA;
+    --color-duck-yellow:  #ffe14b;
+}
+
+/* === HALLOWEEN === */
+body.halloween {
+    --color-bg:           #1A1A2E;
+    --color-surface:      #16213E;
+    --color-border:       #4A3F6B;
+    --color-text:         #F0E6FF;
+    --color-text-muted:   #9A8FB5;
+    --color-accent:       #FF6B00;
+    --color-accent-light: #2D1F00;
+    --color-duck-yellow:  #FFD600;
+}

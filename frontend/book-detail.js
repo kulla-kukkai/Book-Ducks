@@ -273,5 +273,6 @@ async function loadDetail() {
     }
 }
 
+loadTheme()
 updateNav()
 loadDetail()

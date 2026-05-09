@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin — BookDucks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fira+Sans+Condensed:wght@300;400;500;600;700&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <a href="home.html" class="sidebar-logo">
+        <img src="logo.png" alt="BookDucks" />
+    </a>
+
+    <p class="sidebar-label">Menu</p>
+
+    <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showPage('books', this)">
+            <span class="icon">📚</span> All Books
+        </button>
+        <button class="nav-item" onclick="showPage('upload', this)">
+            <span class="icon">➕</span> Upload Book
+        </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="admin-badge">
+            <div class="admin-avatar">🦆</div>
+            <div class="admin-info">
+                <div class="admin-name" id="admin-name">Admin</div>
+                <div class="admin-role">Admin</div>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">
+            <span>🚪</span> Logout
+        </button>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- ALL BOOKS PAGE -->
+    <div class="page active" id="page-books">
+        <div class="page-header">
+            <h1 class="page-title">All Books 📖</h1>
+            <p class="page-sub">Manage your book collection</p>
+        </div>
+        <div class="book-table">
+            <div class="book-table-header">
+                <span>Cover</span>
+                <span>Book</span>
+                <span>Author</span>
+                <span>Pages</span>
+                <span>Year</span>
+                <span>Actions</span>
+            </div>
+            <div id="books-list">
+                <div class="empty-state">
+                    <div class="emoji">🔄</div>
+                    <p>Loading books...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPLOAD PAGE -->
+    <div class="page" id="page-upload">
+        <div class="page-header">
+            <h1 class="page-title">Upload Book ➕</h1>
+            <p class="page-sub">Add a new book to the collection</p>
+        </div>
+        <div class="form-card">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Title *</label>
+                    <input class="form-input" type="text" id="book-title" placeholder="Book title" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Author *</label>
+                    <input class="form-input" type="text" id="book-author" placeholder="Author name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pages</label>
+                    <input class="form-input" type="number" id="book-pages" placeholder="e.g. 320" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Published Date</label>
+                    <input class="form-input" type="date" id="book-date" />
+                </div>
+                <div class="form-group full">
+                    <label class="form-label">Cover Image</label>
+                    <input class="form-input" type="file" id="book-cover" accept="image/*" />
+                </div>
+            </div>
+            <button class="btn-primary" id="upload-btn" onclick="uploadBook()">Upload Book</button>
+            <div class="upload-msg" id="upload-msg"></div>
+        </div>
+    </div>
+
+</main>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Edit Book ✏️</h2>
+            <button class="btn-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label class="form-label">Title *</label>
+                <input class="form-input" type="text" id="edit-title" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Author *</label>
+                <input class="form-input" type="text" id="edit-author" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Pages</label>
+                <input class="form-input" type="number" id="edit-pages" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Published Date</label>
+                <input class="form-input" type="date" id="edit-date" />
+            </div>
+        </div>
+        <input type="hidden" id="edit-doc-id" />
+        <button class="btn-primary" onclick="saveEdit()">Save Changes</button>
+        <div class="upload-msg" id="edit-msg"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="api.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

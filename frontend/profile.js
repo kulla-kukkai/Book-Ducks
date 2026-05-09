@@ -151,4 +151,5 @@ function sortRated(type) {
 }
 
 // เริ่มทำงาน
+loadTheme()
 init()

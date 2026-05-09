@@ -9,11 +9,10 @@ const isAdmin    = () => getUser()?.isAdmin === true
 // ── GET ──
 const apiGet = async (path) => {
     try {
-        let response = await axios.get(`${BASE_URL}${path}`, {
-            headers: {
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
+        const token = getToken()
+        const headers = token ? { "Authorization": `Bearer ${token}` } : {}
+        
+        let response = await axios.get(`${BASE_URL}${path}`, { headers })
         return response.data
     } catch (err) {
         console.log(err)
@@ -70,5 +69,40 @@ const apiDelete = async (path) => {
 const logout = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    window.location.href = "home.html"
+    window.location.replace("home.html")  // ← กลับ home แทน login
+}
+
+// load theme on page load
+const loadTheme = async () => {
+    try {
+        const res = await axios.get(`${BASE_URL}/site-setting?populate[0]=hero_default&populate[1]=hero_christmas&populate[2]=hero_halloween&populate[3]=banner_default&populate[4]=banner_christmas&populate[5]=banner_halloween`
+        )
+        const data = res.data.data
+        const theme = data.theme || "default"
+
+        // เปลี่ยน body class
+        document.body.className = theme
+
+        // เลือกรูปตาม theme
+        const heroImg   = data[`hero_${theme}`]   || data.hero_default
+        const bannerImg = data[`banner_${theme}`] || data.banner_default
+
+        const heroUrl   = heroImg?.url   ? `http://localhost:1337${heroImg.url}`   : null
+        const bannerUrl = bannerImg?.url ? `http://localhost:1337${bannerImg.url}` : null
+
+        // เปลี่ยน hero background ผ่าน CSS
+        if (heroUrl) {
+            const heroEl = document.querySelector(".hero")
+            if (heroEl) heroEl.style.backgroundImage = `url('${heroUrl}')`
+        }
+
+        // เปลี่ยนรูป duck banner
+        if (bannerUrl) {
+            const bannerEl = document.querySelector(".duck-banner img")
+            if (bannerEl) bannerEl.src = bannerUrl
+        }
+
+    } catch (err) {
+        console.error("Theme load error:", err)
+    }
 }

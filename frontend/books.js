@@ -3,14 +3,19 @@
 let allBooks = []      // เก็บหนังสือทั้งหมด
 let currentSort = 'title'  // sort ปัจจุบัน
 
-// อัปเดต navbar
 function updateNav() {
   const user = getUser()
   if (user) {
     document.getElementById("nav-username").textContent = `Hi, ${user.username}!`
-    document.getElementById("nav-profile").style.display = "inline"
     document.getElementById("nav-logout").style.display = "inline"
     document.getElementById("nav-login").style.display = "none"
+
+    if (isAdmin()) {
+      document.getElementById("nav-profile").style.display = "none"
+      document.getElementById("nav-admin").style.display = "inline"
+    } else {
+      document.getElementById("nav-profile").style.display = "inline"
+    }
   }
 }
 
@@ -162,5 +167,6 @@ async function saveBook(bookId, btn) {
 document.getElementById("search-input").addEventListener("input", applyFilters)
 
 // เริ่มทำงาน
+loadTheme()
 updateNav()
 loadBooks()

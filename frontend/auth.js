@@ -7,6 +7,8 @@ if (isLoggedIn()) {
   location.href = "home.html"
 }
 
+loadTheme()
+
 function showError(msg, isSuccess = false) {
   const el = document.getElementById("auth-error")
   if (!el) return
@@ -88,13 +90,14 @@ async function handleLogin() {
 
   try {
     // Step 1: login → ได้ jwt
-    const res = await apiPost("/auth/local", {
-      identifier: email,
-      password:   password,
+    const res = await axios.post(`http://localhost:1337/api/auth/local`, {
+    identifier: email,
+    password:   password,
     })
+    const { jwt, user } = res.data 
 
     // Step 2: เก็บ token ก่อน
-    localStorage.setItem("token", res.jwt)
+    localStorage.setItem("token", jwt)
 
     // Step 3: ดึง /users/me เพื่อให้ได้ username + isAdmin
     const me = await apiGet("/users/me")
@@ -143,7 +146,7 @@ async function handleRegister() {
   btn.textContent = "Creating account..."
 
   try {
-    await apiPost("/auth/local/register", { username, email, password })
+    await axios.post(`http://localhost:1337/api/auth/local/register`, { username, email, password })
     switchTab("login")
     showError("✓ Account created! Please log in.", true)
   } catch (err) {
