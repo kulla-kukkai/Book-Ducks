@@ -6,7 +6,7 @@ let currentSort = 'title'  // sort ปัจจุบัน
 function updateNav() {
   const user = getUser()
   if (user) {
-    document.getElementById("nav-username").textContent = `Hi, ${user.username}!`
+    document.getElementById("nav-username").textContent = `Hi, ${user.username}`
     document.getElementById("nav-logout").style.display = "inline"
     document.getElementById("nav-login").style.display = "none"
 
@@ -62,22 +62,22 @@ function renderBooks(books) {
       : `<p class="book-rating muted">Not rated yet</p>`
 
     return `
-      <div class="book-card">
-        ${coverUrl
-          ? `<img class="book-cover" src="${coverUrl}" alt="${title}" />`
-          : `<div class="book-cover no-cover">📖</div>`
-        }
-        <div class="book-info">
-          <h3 class="book-title">${title}</h3>
-          <p class="book-author">${author}</p>
-          ${ratingHtml}
-          <p class="book-meta">${pages ? pages + ' pages' : ''} ${publishedDate ? '· ' + publishedDate.slice(0,4) : ''}</p>
-          <div class="book-actions">
-            <button class="btn-icon" onclick="saveBook(${book.id}, this)">+ Att läsa</button>
-          </div>
+    <div class="book-card" onclick="location.href='book-detail.html?id=${book.documentId}'" style="cursor:pointer">
+      ${coverUrl
+        ? `<img class="book-cover" src="${coverUrl}" alt="${title}" />`
+        : `<div class="book-cover no-cover">📖</div>`
+      }
+      <div class="book-info">
+        <h3 class="book-title">${title}</h3>
+        <p class="book-author">${author}</p>
+        ${ratingHtml}
+        <p class="book-meta">${pages ? pages + ' pages' : ''} ${publishedDate ? '· ' + publishedDate.slice(0,4) : ''}</p>
+        <div class="book-actions">
+          <button class="btn-icon" onclick="event.stopPropagation(); saveBook('${book.documentId}', this)">+ save</button>
         </div>
       </div>
-    `
+    </div>
+  `
   }).join("")
 }
 
@@ -113,7 +113,7 @@ function applyFilters() {
   renderBooks(filtered)
 }
 
-// save Att läsa
+// save book
 async function saveBook(bookId, btn) {
   if (!isLoggedIn()) {
     alert("Please login first!")

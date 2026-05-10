@@ -1,0 +1,246 @@
+/* ============================================================
+   home.css — BookDucks Home Page Only
+   Hero, Carousel, Book Card Glassmorphism, Skeleton
+   ============================================================ */
+
+/* ── HERO ── */
+.hero {
+    background-image: url('duck-hero.png');
+    background-size: cover;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    padding: 6rem 3rem 5rem;
+    min-height: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 640px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-tag {
+    font-family: var(--font-title);
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(34, 111, 183, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 700;
+    color: #1C1C1A;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-sub {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: rgba(80, 78, 70, 0.85);
+    line-height: 1.6;
+}
+
+/* ── BOOKS SECTION ── */
+.books-section {
+    background-color: #ffeca9;
+    padding: 3rem 0 20rem;
+    position: relative;
+}
+
+.books-section .container { position: relative; }
+
+/* ── CAROUSEL ── */
+.carousel-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0.75rem 0.5rem 1.25rem;
+    cursor: grab;
+}
+
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track.dragging { cursor: grabbing; scroll-behavior: auto; }
+
+.carousel-btn {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    font-size: 20px;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: #1C1C1A;
+    color: white;
+    transform: scale(1.08);
+}
+
+.carousel-btn:disabled { opacity: 0.25; cursor: default; }
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 0.75rem;
+}
+
+.carousel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+}
+
+.carousel-dot.active {
+    background: #1C1C1A;
+    width: 18px;
+    border-radius: 3px;
+}
+
+/* ── BOOK CARD — Glassmorphism (home page only) ── */
+.book-card {
+    flex-shrink: 0;
+    width: 175px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 4px 16px rgba(0,0,0,0.08),
+        0 1px 4px rgba(0,0,0,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    cursor: pointer;
+}
+
+.book-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow:
+        0 20px 48px rgba(0,0,0,0.12),
+        0 4px 12px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,1);
+    border-color: rgba(255,255,255,0.95);
+}
+
+.book-info {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+}
+
+.book-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1C1C1A;
+}
+
+.book-author {
+    font-size: 11px;
+    color: rgba(28,28,26,0.5);
+}
+
+.book-meta {
+    font-size: 10px;
+    color: rgba(28,28,26,0.4);
+    margin-top: auto;
+    padding-top: 0.4rem;
+}
+
+.book-rating {
+    font-size: 11px;
+    color: #b8870a;
+    font-weight: 600;
+}
+
+.star { font-size: 11px; }
+.star-full { color: #f59e0b; }
+.star-half { color: #f59e0b; opacity: 0.6; }
+.star-empty { color: rgba(0,0,0,0.15); }
+
+.btn-icon {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 100px;
+    padding: 0.3rem 0.7rem;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(28,28,26,0.6);
+    backdrop-filter: blur(8px);
+}
+
+.btn-icon:hover,
+.btn-icon.saved {
+    background: #1C1C1A;
+    color: white;
+    border-color: #1C1C1A;
+}
+
+/* ── SKELETON ── */
+@keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position:  400px 0; }
+}
+
+.skeleton-card {
+    flex-shrink: 0;
+    width: 175px;
+    border-radius: 16px;
+    height: 300px;
+    background: linear-gradient(90deg,
+        rgba(255,255,255,0.3) 25%,
+        rgba(255,255,255,0.6) 50%,
+        rgba(255,255,255,0.3) 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite linear;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+    .hero { padding: 3rem 1.5rem 2.5rem; min-height: 480px; }
+    .hero-title { font-size: 3.25rem; }
+    .hero-sub { font-size: 15px; }
+    .book-card { width: 150px; }
+    .skeleton-card { width: 150px; }
+}

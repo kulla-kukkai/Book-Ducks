@@ -14,7 +14,7 @@ function updateNav() {
     const navLogout   = document.getElementById("nav-logout")
     const navLogin    = document.getElementById("nav-login")
     if (isLoggedIn() && user) {
-        navUsername.textContent = `Hi, ${user.username} 🦆`
+        navUsername.textContent = `Hi, ${user.username}`
         if (navProfile) navProfile.style.display = "inline-block"
         if (navLogout)  navLogout.style.display  = "inline-block"
         if (navLogin)   navLogin.style.display   = "none"
