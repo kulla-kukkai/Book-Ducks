@@ -57,27 +57,33 @@ async function loadBooks() {
  
 // ── Render การ์ดหนังสือ ──
 function renderCard(book) {
-    const title     = book.title    || "Untitled"
-    const author    = book.author   || ""
-    const pages     = book.pages    || ""
-    const coverUrl  = book.cover?.url ? `http://localhost:1337${book.cover.url}` : null
-    const avgRating = book.avgRating || null
-    
-    const starsHtml = avgRating
-        ? `<p class="book-rating">${renderStars(avgRating)} <span style="font-size:11px;color:var(--color-text-muted)">${avgRating.toFixed(1)}</span></p>`
-        : ""
-    
+    const title    = book.title    || "Untitled"
+    const author   = book.author   || ""
+    const pages    = book.pages    || ""
+    const published = book.publishedDate ? book.publishedDate.slice(0, 4) : ""
+    const coverUrl = book.cover?.url ? `http://localhost:1337${book.cover.url}` : null
+
+    // คำนวณ avg จาก ratings array เหมือน books.js
+    const ratings = book.ratings || []
+    const avg = ratings.length
+        ? ratings.reduce((s, r) => s + r.score, 0) / ratings.length
+        : null
+
+    const ratingHtml = avg
+        ? `<p class="book-rating">★ ${avg.toFixed(1)}</p>`
+        : `<p class="book-rating" style="color:var(--color-text-muted);font-size:11px">Not rated yet</p>`
+
     return `
         <div class="book-card" onclick="location.href='book-detail.html?id=${book.documentId}'" style="cursor:pointer">
-        ${coverUrl
-            ? `<img class="book-cover" src="${coverUrl}" alt="${title}" />`
-            : `<div class="book-cover book-cover-placeholder">📖</div>`}
-        <div class="book-info">
-            <h3 class="book-title">${title}</h3>
-            <p class="book-author">${author}</p>
-            ${starsHtml}
-            <p class="book-meta">${pages ? pages + " pages" : ""}</p>
-        </div>
+            ${coverUrl
+                ? `<img class="book-cover" src="${coverUrl}" alt="${title}" />`
+                : `<div class="book-cover book-cover-placeholder">📖</div>`}
+            <div class="book-info">
+                <h3 class="book-title">${title}</h3>
+                <p class="book-author">${author}</p>
+                ${ratingHtml}
+                <p class="book-meta">${pages ? pages + " pages" : ""}${published ? " · " + published : ""}</p>
+            </div>
         </div>
     `
 }

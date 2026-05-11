@@ -136,6 +136,14 @@
   padding: 1.5rem 0;
 }
 
+/* BOOKS GRID */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .profile-header { padding: 2rem 1rem; }

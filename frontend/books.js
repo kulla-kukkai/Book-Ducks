@@ -57,9 +57,14 @@ function renderBooks(books) {
       ? `http://localhost:1337${cover.url}`
       : null
 
-    const ratingHtml = averageRating
-      ? `<p class="book-rating">★ ${Number(averageRating).toFixed(1)}</p>`
-      : `<p class="book-rating muted">Not rated yet</p>`
+    const ratings = book.ratings || []
+    const avg = ratings.length
+        ? ratings.reduce((s, r) => s + r.score, 0) / ratings.length
+        : null
+
+    const ratingHtml = avg
+        ? `<p class="book-rating">★ ${avg.toFixed(1)}</p>`
+        : `<p class="book-rating" style="color:var(--color-text-muted);font-size:11px">Not rated yet</p>`
 
     return `
     <div class="book-card" onclick="location.href='book-detail.html?id=${book.documentId}'" style="cursor:pointer">

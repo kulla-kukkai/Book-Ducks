@@ -224,8 +224,6 @@ async function loadDetail() {
             ${ratings.length ? `<div class="stat-item"><span class="stat-label">Ratings</span><span class="stat-value">${ratings.length.toLocaleString()}</span></div>` : ""}
             </div>
 
-            <div class="squiggle">〰〰〰</div>
-
             ${description ? `<p class="detail-description">${description}</p>` : ""}
 
             ${ratingSection}

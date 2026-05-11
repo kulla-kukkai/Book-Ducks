@@ -81,7 +81,9 @@ const loadTheme = async () => {
         const theme = data.theme || "default"
 
         // เปลี่ยน body class
-        document.body.className = theme
+        const current = document.body.className
+        const hasAuthPage = current.includes("auth-page")
+        document.body.className = hasAuthPage ? `${theme} auth-page` : theme
 
         // เลือกรูปตาม theme
         const heroImg   = data[`hero_${theme}`]   || data.hero_default

@@ -5,9 +5,12 @@ body.christmas {
     --color-border:       #F5C5C5;
     --color-text:         #1C1C1A;
     --color-text-muted:   #9A8880;
-    --color-accent:       #C0392B;
-    --color-accent-light: #FDECEA;
+    --color-accent:       #2C5F2E;  
+    --color-accent-light: #EBF5EB;
     --color-duck-yellow:  #ffe14b;
+    --color-books-bg:     #f2b7b1; 
+    --color-page-header: #C0392B;
+    --color-navbar-bg: rgba(42, 154, 50, 0.35);
 }
 
 /* === HALLOWEEN === */
@@ -15,9 +18,26 @@ body.halloween {
     --color-bg:           #1A1A2E;
     --color-surface:      #16213E;
     --color-border:       #4A3F6B;
-    --color-text:         #F0E6FF;
+    --color-text:         #5c4735;
     --color-text-muted:   #9A8FB5;
     --color-accent:       #FF6B00;
     --color-accent-light: #2D1F00;
-    --color-duck-yellow:  #FFD600;
+    --color-books-bg:     #0D0D1A; 
+    --color-page-header: #FF6B00;
+    --color-navbar-bg: rgba(255, 107, 0, 0.35);
+}
+
+/* === DEFAULT === */
+body.default {
+    --color-bg:           #fdf6bf;
+    --color-surface:      #FFFFFF;
+    --color-border:       #E8E6E0;
+    --color-text:         #1C1C1A;
+    --color-text-muted:   #8A8880;
+    --color-accent:       #398ccf;
+    --color-accent-light: #fefefc;
+    --color-duck-yellow:  #ffe14b;
+    --color-books-bg:     #ffeea8;
+    --color-navbar-bg: rgba(255, 225, 75, 0.45);
+    --color-page-header: #ffe14b;
 }

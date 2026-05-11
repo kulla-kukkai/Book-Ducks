@@ -12,6 +12,7 @@ async function init() {
   updateNav()
   await loadProfile()
   await loadReadingList()
+  await loadRatedBooks()
 }
 
 // ── Navbar ──
@@ -142,12 +143,83 @@ function sortList(type) {
   renderReadingList(sorted)
 }
 
+// ── Rated Books ──
+async function loadRatedBooks() {
+  const container = document.getElementById("rated-list")
+
+  try {
+    const res = await apiGet("/books?populate=cover&pagination[limit]=100")
+    const allBooks = res.data || []
+    const user = getUser()
+
+    // กรองเฉพาะหนังสือที่ user นี้เคย rate
+    ratedBooksData = allBooks
+      .filter(book => {
+        const ratings = book.ratings || []
+        return ratings.some(r => r.userId === user.id)
+      })
+      .map(book => {
+        const ratings = book.ratings || []
+        const myRating = ratings.find(r => r.userId === user.id)
+        return { ...book, myScore: myRating?.score || 0 }
+      })
+
+    renderRatedBooks(ratedBooksData)
+
+  } catch (err) {
+    console.error("Rated books error:", err)
+    container.innerHTML = `<p class="empty-msg">Error loading rated books</p>`
+  }
+}
+
+// ── Render Rated Books ──
+function renderRatedBooks(books) {
+  const container = document.getElementById("rated-list")
+
+  if (!books || books.length === 0) {
+    container.innerHTML = `<p class="empty-msg">No rated books yet — go rate some! ⭐</p>`
+    return
+  }
+
+  container.innerHTML = books.map(book => {
+    const coverUrl = book.cover?.url
+      ? `http://localhost:1337${book.cover.url}`
+      : null
+
+    const stars = "★".repeat(book.myScore) + "☆".repeat(5 - book.myScore)
+
+    return `
+      <div class="book-card" onclick="location.href='book-detail.html?id=${book.documentId}'" style="cursor:pointer">
+        ${coverUrl
+          ? `<img class="book-cover" src="${coverUrl}" alt="${book.title}" />`
+          : `<div class="book-cover book-cover-placeholder">📖</div>`
+        }
+        <div class="book-info">
+          <h3 class="book-title">${book.title}</h3>
+          <p class="book-author">${book.author}</p>
+          <p class="book-rating" style="color:#f59e0b">${stars} ${book.myScore}/5</p>
+          <p class="book-meta">${book.pages ? book.pages + ' pages' : ''}</p>
+        </div>
+      </div>
+    `
+  }).join("")
+}
+
 // ── Sort Rated (VG — placeholder) ──
+// ── Sort Rated ──
 function sortRated(type) {
   event.target.closest(".sort-controls")
     .querySelectorAll(".sort-btn")
     .forEach(b => b.classList.remove("active"))
   event.target.classList.add("active")
+
+  const sorted = [...ratedBooksData].sort((a, b) => {
+    if (type === "title")  return (a.title || "").localeCompare(b.title || "")
+    if (type === "author") return (a.author || "").localeCompare(b.author || "")
+    if (type === "rating") return b.myScore - a.myScore
+    return 0
+  })
+  renderRatedBooks(sorted)
 }
 
 // เริ่มทำงาน
