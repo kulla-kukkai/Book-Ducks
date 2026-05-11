@@ -49,7 +49,7 @@ function togglePassword(inputId, btn) {
   if (!input) return
   const isHidden  = input.type === "password"
   input.type      = isHidden ? "text" : "password"
-  btn.textContent = isHidden ? "🙈" : "👁️"
+  btn.textContent = isHidden ? "HIDE" : "SHOW"
 }
 
 // ============================================================
