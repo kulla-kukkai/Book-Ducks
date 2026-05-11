@@ -50,7 +50,7 @@ input  { font-family: var(--font-body); }
     align-items: center;
     justify-content: space-between;
     padding: 0.875rem 2.5rem;
-    background: var(--color-navbar-bg); 
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(0,0,0,0.06);

@@ -10,7 +10,6 @@ body.christmas {
     --color-duck-yellow:  #ffe14b;
     --color-books-bg:     #f2b7b1; 
     --color-page-header: #C0392B;
-    --color-navbar-bg: rgba(42, 154, 50, 0.35);
 }
 
 /* === HALLOWEEN === */
@@ -24,7 +23,6 @@ body.halloween {
     --color-accent-light: #2D1F00;
     --color-books-bg:     #0D0D1A; 
     --color-page-header: #FF6B00;
-    --color-navbar-bg: rgba(255, 107, 0, 0.35);
 }
 
 /* === DEFAULT === */
@@ -38,6 +36,5 @@ body.default {
     --color-accent-light: #fefefc;
     --color-duck-yellow:  #ffe14b;
     --color-books-bg:     #ffeea8;
-    --color-navbar-bg: rgba(255, 225, 75, 0.45);
     --color-page-header: #ffe14b;
 }
