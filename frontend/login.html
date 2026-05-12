@@ -24,26 +24,19 @@
   <!-- AUTH CARD -->
   <main class="auth-container">
     <div class="auth-card">
- 
       <!-- TABS -->
       <div class="auth-tabs">
         <button class="auth-tab active" id="tab-login"    onclick="switchTab('login')">Login</button>
         <button class="auth-tab"        id="tab-register" onclick="switchTab('register')">Register</button>
       </div>
- 
       <!-- ERROR / SUCCESS MESSAGE -->
       <div id="auth-error" style="display:none; margin-bottom:0.75rem; font-size:0.85rem;"></div>
- 
-      <!-- ══════════════════════════════════════════
-           LOGIN FORM
-      ══════════════════════════════════════════ -->
+      <!-- LOGIN FORM -->
       <div id="form-login">
- 
         <div class="form-group">
           <label for="login-email">Email</label>
           <input type="email" id="login-email" placeholder="your@email.com" />
         </div>
- 
         <div class="form-group">
           <label for="login-password">Password</label>
           <div class="pw-wrap">
@@ -51,45 +44,36 @@
             <button class="pw-toggle" id="toggle-login-pw" type="button" aria-label="Show password">SHOW</button>
           </div>
         </div>
- 
         <button class="btn-primary btn-full" id="login-btn" onclick="handleLogin()">Login</button>
- 
       </div>
- 
-      <!-- ══════════════════════════════════════════
-           REGISTER FORM
-      ══════════════════════════════════════════ -->
+      <!-- REGISTER FORM -->
       <div id="form-register" style="display:none">
- 
         <div class="form-group">
           <label for="reg-username">Username</label>
           <input type="text" id="reg-username" placeholder="ducklover99" />
         </div>
- 
         <div class="form-group">
           <label for="reg-email">Email</label>
           <input type="email" id="reg-email" placeholder="your@email.com" />
         </div>
- 
         <div class="form-group">
           <label for="reg-password">Password</label>
           <div class="pw-wrap">
             <input type="password" id="reg-password" placeholder="••••••••" />
             <button class="pw-toggle" id="toggle-reg-pw" type="button" aria-label="Show password">SHOW</button>
           </div>
- 
-          <!-- RULES — เปลี่ยนสีเขียวเมื่อผ่าน -->
+          <!-- RULES -->
           <ul class="pw-rules">
             <li id="rule-length">At least 8 characters</li>
             <li id="rule-upper">At least one capital letter</li>
             <li id="rule-number">At least one number</li>
           </ul>
         </div>
- 
+
         <button class="btn-primary btn-full" id="register-btn" onclick="handleRegister()">Create Account</button>
- 
+
       </div>
- 
+
     </div>
   </main>
 

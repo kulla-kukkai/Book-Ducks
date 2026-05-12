@@ -83,25 +83,25 @@ const loadTheme = async () => {
         const data = res.data.data
         const theme = data.theme || "default"
 
-        // เปลี่ยน body class
+        // change body class
         const current = document.body.className
         const hasAuthPage = current.includes("auth-page")
         document.body.className = hasAuthPage ? `${theme} auth-page` : theme
 
-        // เลือกรูปตาม theme
+        // choose img theme
         const heroImg   = data[`hero_${theme}`]   || data.hero_default
         const bannerImg = data[`banner_${theme}`] || data.banner_default
 
         const heroUrl   = heroImg?.url   ? `http://localhost:1337${heroImg.url}`   : null
         const bannerUrl = bannerImg?.url ? `http://localhost:1337${bannerImg.url}` : null
 
-        // เปลี่ยน hero background ผ่าน CSS
+        // change hero background via CSS
         if (heroUrl) {
             const heroEl = document.querySelector(".hero")
             if (heroEl) heroEl.style.backgroundImage = `url('${heroUrl}')`
         }
 
-        // เปลี่ยนรูป duck banner
+        // change duck banner image
         if (bannerUrl) {
             const bannerEl = document.querySelector(".duck-banner img")
             if (bannerEl) bannerEl.src = bannerUrl

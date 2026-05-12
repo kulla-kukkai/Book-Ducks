@@ -1,7 +1,7 @@
 // books.js — หน้า All Books
 
-let allBooks = []      // เก็บหนังสือทั้งหมด
-let currentSort = 'title'  // sort ปัจจุบัน
+let allBooks = []      // collect all books for easy search + sort
+let currentSort = 'title'  // sort name: title, author, pages
 
 function updateNav() {
   const user = getUser()
@@ -20,7 +20,7 @@ function updateNav() {
   }
 }
 
-// ดึงหนังสือทั้งหมด
+// pull books from backend and render
 async function loadBooks() {
   try {
     const res = await apiGet("/books?populate=cover&pagination[limit]=100")
@@ -38,7 +38,7 @@ async function loadBooks() {
   }
 }
 
-// render การ์ดหนังสือ
+// render books as cards in grid
 function renderBooks(books) {
   const grid = document.getElementById("books-grid")
   const empty = document.getElementById("empty-state")
@@ -98,7 +98,7 @@ function setSort(type, btn) {
   applyFilters()
 }
 
-// search + sort รวมกัน
+// search + sort together
 function applyFilters() {
   const query = document.getElementById("search-input").value.toLowerCase().trim()
 

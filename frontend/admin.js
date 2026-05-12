@@ -1,7 +1,6 @@
 // admin.js — BookDucks Admin Panel
 
 // ── Guard: admin only ──
-// เดิม
 if (!isLoggedIn() || !isAdmin()) {
     window.location.replace("home.html")
 }
@@ -24,9 +23,8 @@ function showPage(name, btn) {
     if (name === "books") loadBooks()
 }
 
-// ============================================================
 // ALL BOOKS
-// ============================================================
+
 async function loadBooks() {
     const el = document.getElementById("books-list")
     el.innerHTML = `<div class="empty-state"><div class="emoji">🔄</div><p>Loading...</p></div>`
@@ -71,9 +69,7 @@ function renderBookRow(book) {
     `
 }
 
-// ============================================================
 // UPLOAD BOOK
-// ============================================================
 async function uploadBook() {
     const title  = document.getElementById("book-title").value.trim()
     const author = document.getElementById("book-author").value.trim()
@@ -134,9 +130,8 @@ function clearUploadForm() {
     document.getElementById("book-cover").value  = ""
 }
 
-// ============================================================
 // EDIT BOOK
-// ============================================================
+
 function openEdit(docId, title, author, pages, date) {
     document.getElementById("edit-doc-id").value  = docId
     document.getElementById("edit-title").value   = title
@@ -181,9 +176,8 @@ async function saveEdit() {
     }
 }
 
-// ============================================================
 // DELETE BOOK
-// ============================================================
+
 async function deleteBook(docId, btn) {
     if (!confirm("Delete this book? This cannot be undone.")) return
 
@@ -201,9 +195,8 @@ async function deleteBook(docId, btn) {
     }
 }
 
-// ============================================================
 // HELPERS
-// ============================================================
+
 function showMsg(id, text, type) {
     const el = document.getElementById(id)
     el.textContent = text

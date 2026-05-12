@@ -1,8 +1,5 @@
-// ============================================================
-// auth.js — Login & Register สำหรับ BookDucks
-// ============================================================
 
-// ── redirect ถ้า login อยู่แล้ว ──
+// ── redirect if login already ──
 if (isLoggedIn()) {
   location.href = "home.html"
 }
@@ -17,9 +14,8 @@ function showError(msg, isSuccess = false) {
   el.style.color   = isSuccess ? "var(--color-accent)" : "crimson"
 }
 
-// ============================================================
 // TAB SWITCHING
-// ============================================================
+
 function switchTab(tab) {
   const loginForm    = document.getElementById("form-login")
   const registerForm = document.getElementById("form-register")
@@ -41,9 +37,8 @@ function switchTab(tab) {
   }
 }
 
-// ============================================================
 // TOGGLE PASSWORD
-// ============================================================
+
 function togglePassword(inputId, btn) {
   const input = document.getElementById(inputId)
   if (!input) return
@@ -52,9 +47,8 @@ function togglePassword(inputId, btn) {
   btn.textContent = isHidden ? "HIDE" : "SHOW"
 }
 
-// ============================================================
 // PASSWORD RULES
-// ============================================================
+
 function checkPasswordRules(password) {
   const rules = [
     { id: "rule-length", pass: password.length >= 8 },
@@ -70,9 +64,8 @@ function checkPasswordRules(password) {
   return rules.every(r => r.pass)
 }
 
-// ============================================================
 // LOGIN
-// ============================================================
+
 async function handleLogin() {
   const email    = document.getElementById("login-email").value.trim()
   const password = document.getElementById("login-password").value
@@ -118,9 +111,9 @@ async function handleLogin() {
   }
 }
 
-// ============================================================
+
 // REGISTER
-// ============================================================
+
 async function handleRegister() {
   const username = document.getElementById("reg-username").value.trim()
   const email    = document.getElementById("reg-email").value.trim()
@@ -156,9 +149,8 @@ async function handleRegister() {
   }
 }
 
-// ============================================================
 // INIT
-// ============================================================
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("toggle-login-pw")
     ?.addEventListener("click", function() { togglePassword("login-password", this) })

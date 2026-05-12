@@ -37,69 +37,66 @@ function starsHtml(rating, max = 5) {
     return h
 }
 
-// ── Helper: ดึง reading list ของ user ──
+// ── Helper: pull reading list of user ──
 async function getMyReadingList() {
-  const res = await apiGet(`/reading-lists?populate[books][fields]=id`)
-  // Strapi จะ return แค่ list ของ user ที่ login อยู่ (ถ้าเปิด permission ถูกต้อง)
-  return res.data?.[0] || null
+    const res = await apiGet(`/reading-lists?populate[books][fields]=id`)
+    // Strapi will return only list of the user which loged in 
+    return res.data?.[0] || null
 }
 
 // ── Check if book is already saved ──
 async function isSaved(bookDocId) {
-  if (!isLoggedIn()) return false
-  try {
-    const res = await apiGet(`/users/me?populate[savedBooks][fields]=documentId`)
-    const savedBooks = res.savedBooks || []
-    return savedBooks.some(b => b.documentId === bookDocId)
-  } catch { return false }
+    if (!isLoggedIn()) return false
+    try {
+        const res = await apiGet(`/users/me?populate[savedBooks][fields]=documentId`)
+        const savedBooks = res.savedBooks || []
+        return savedBooks.some(b => b.documentId === bookDocId)
+    } catch { return false }
 }
 
 // ── Save / unsave book ──
 async function handleSave(bookDocId, btn) {
-  if (!isLoggedIn()) { location.href = "login.html"; return }
+    if (!isLoggedIn()) { location.href = "login.html"; return }
 
-  btn.disabled = true
-  btn.textContent = "Saving..."
-
-  try {
-    const user = getUser()
-    
-    // ดึง numeric id ของหนังสือ
-    const bookRes = await apiGet(`/books/${bookDocId}`)
-    const book = bookRes.data
-
-    await axios.put(
-      `http://localhost:1337/api/users/${user.id}`,
-      { savedBooks: { connect: [{ id: book.id }] } },
-      { headers: { "Authorization": `Bearer ${getToken()}` } }
-    )
-
-    btn.textContent = "✓ Saved to reading list"
-    btn.classList.add("saved-state")
     btn.disabled = true
+    btn.textContent = "Saving..."
 
-  } catch (err) {
-    console.error(err)
-    btn.textContent = "Error — try again"
-    btn.disabled = false
-  }
+    try {
+        const user = getUser()
+        
+        // ดึง numeric id ของหนังสือ
+        const bookRes = await apiGet(`/books/${bookDocId}`)
+        const book = bookRes.data
+
+        await axios.put(
+        `http://localhost:1337/api/users/${user.id}`,
+        { savedBooks: { connect: [{ id: book.id }] } },
+        { headers: { "Authorization": `Bearer ${getToken()}` } }
+        )
+
+        btn.textContent = "✓ Saved to reading list"
+        btn.classList.add("saved-state")
+        btn.disabled = true
+
+    } catch (err) {
+        console.error(err)
+        btn.textContent = "Error — try again"
+        btn.disabled = false
+    }
 }
 
 // ── Submit rating ──
-// Note: ต้องมี field "ratings" (JSON array) หรือ relation ใน Strapi
-// วิธีง่าย: เก็บเป็น JSON field ratings: [{userId, score}] ใน Book
-// แล้วคำนวณ avgRating ฝั่ง frontend จาก array นั้น
-// ถ้ายังไม่มี field → จะ fail silently แล้วแสดง coming soon message
+
 async function submitRating(bookId, score, book) {
     const ratingBox = document.getElementById("rating-box")
     ratingBox.innerHTML = `<p class="rating-box-label">YOUR RATING</p><p style="color:var(--color-text-muted);font-size:14px">Saving...</p>`
 
     try {
-        // ดึง ratings เดิม (ถ้ามี field ratings ใน Strapi)
+        // pull the ole ratings if existing
         let ratings = book.ratings || []
         const user  = getUser()
 
-        // อัปเดต score ของ user นี้ (ถ้ามีอยู่แล้ว replace, ถ้ายังไม่มี push)
+        // update score of this user (if already exists, replace; otherwise push)
         const existing = ratings.findIndex(r => r.userId === user.id)
         if (existing >= 0) ratings[existing].score = score
         else               ratings.push({ userId: user.id, score })

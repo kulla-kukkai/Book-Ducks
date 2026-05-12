@@ -30,7 +30,7 @@ if (logoutBtn) logoutBtn.addEventListener("click", (e) => {
     logout()
 })
 
-// ── โหลดหนังสือ ──
+// ── load books ──
 async function loadBooks() {
     try {
         // sort createdAt desc, limit 10 — เล่มใหม่สุด
@@ -55,7 +55,7 @@ async function loadBooks() {
     }
 }
  
-// ── Render การ์ดหนังสือ ──
+// ── Render book cards ──
 function renderCard(book) {
     const title    = book.title    || "Untitled"
     const author   = book.author   || ""
@@ -111,12 +111,12 @@ function initCarousel() {
     const totalCards = track.children.length
     const steps = Math.ceil(totalCards / visibleCards)
 
-  // สร้าง dots
+  //  dots
     dotsWrap.innerHTML = Array.from({ length: steps }, (_, i) =>
         `<button class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="goToStep(${i})"></button>`
     ).join("")
 
-  // ปุ่มเลื่อน
+  // btns next/prev
     btnNext.onclick = () => {
         track.scrollBy({ left: cardWidth * visibleCards, behavior: "smooth" })
     }
@@ -124,7 +124,7 @@ function initCarousel() {
         track.scrollBy({ left: -cardWidth * visibleCards, behavior: "smooth" })
     }
 
-  // อัปเดต dots ตาม scroll
+  // update dots + disable btns on scroll
     track.addEventListener("scroll", () => {
         const step = Math.round(track.scrollLeft / (cardWidth * visibleCards))
         document.querySelectorAll(".carousel-dot").forEach((d, i) => {

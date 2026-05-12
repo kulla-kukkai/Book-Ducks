@@ -1,7 +1,7 @@
-// profile.js — หน้า Profile
 
-let readingListData = []  // เก็บ Att läsa
-let ratedBooksData = []   // เก็บ Rated books (VG)
+
+let readingListData = []  // saved books (Att läsa)
+let ratedBooksData = []   // saved ratings (Betyg)
 
 // ── Init ──
 async function init() {
@@ -37,7 +37,7 @@ async function loadProfile() {
         document.getElementById("profile-name").textContent = user.username
         document.getElementById("profile-email").textContent = user.email
 
-        // tagline สุ่ม
+        // tagline random
         const taglines = [
             "Ready to quack into your next book?",
             "What the duck are you reading today?",
@@ -163,7 +163,7 @@ async function loadRatedBooks() {
     const allBooks = res.data || []
     const user = getUser()
 
-    // กรองเฉพาะหนังสือที่ user นี้เคย rate
+    // filter + map for rated books 
     ratedBooksData = allBooks
       .filter(book => {
         const ratings = book.ratings || []
@@ -216,7 +216,6 @@ function renderRatedBooks(books) {
   }).join("")
 }
 
-// ── Sort Rated (VG — placeholder) ──
 // ── Sort Rated ──
 function sortRated(type) {
   event.target.closest(".sort-controls")
@@ -233,7 +232,7 @@ function sortRated(type) {
   renderRatedBooks(sorted)
 }
 
-// เริ่มทำงาน
+// starting page
 loadTheme()
 init()
 document.querySelector('a[href="profile.html"]')?.classList.add("nav-active")
