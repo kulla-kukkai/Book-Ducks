@@ -79,7 +79,10 @@ function renderBooks(books) {
         ${ratingHtml}
         <p class="book-meta">${pages ? pages + ' pages' : ''} ${publishedDate ? '· ' + publishedDate.slice(0,4) : ''}</p>
         <div class="book-actions">
-          <button class="btn-icon" onclick="event.stopPropagation(); saveBook('${book.documentId}', this)">+ save</button>
+            <button class="btn-icon" 
+                ${isAdmin() ? 'disabled style="opacity:0.4;cursor:not-allowed"' : `onclick="event.stopPropagation(); saveBook('${book.documentId}', this)"`}>
+                + save
+            </button>
         </div>
       </div>
     </div>
@@ -120,7 +123,8 @@ function applyFilters() {
 }
 
 // save book
-async function saveBook(bookId, btn) {
+async function saveBook(bookDocumentId, btn) {
+  console.log("saveBook called!", bookDocumentId) 
   if (!isLoggedIn()) {
     alert("Please login first!")
     window.location.href = "login.html"
@@ -132,32 +136,24 @@ async function saveBook(bookId, btn) {
     btn.disabled = true
 
     const user = getUser()
-    const res = await apiGet(
-      `/reading-lists?filters[users_permissions_user][id][$eq]=${user.id}&populate=books`
-    )
-    const lists = res.data
 
-    if (lists && lists.length > 0) {
-      const listId = lists[0].id
-      const existingBooks = lists[0].books?.map(b => b.id) || []
+    // ดึง book เพื่อเอา numeric id
+    const bookRes = await apiGet(`/books/${bookDocumentId}?populate=savedByUsers`)
+    const book = bookRes.data
+    const alreadySaved = book.savedByUsers?.some(u => u.id === user.id)
 
-      if (existingBooks.includes(bookId)) {
-        btn.textContent = "✓ Saved"
-        btn.classList.add("saved")
-        return
-      }
-
-      await apiPut(`/reading-lists/${listId}`, {
-        data: { books: [...existingBooks, bookId] }
-      })
-    } else {
-      await apiPost("/reading-lists", {
-        data: {
-          books: [bookId],
-          users_permissions_user: user.id
-        }
-      })
+    if (alreadySaved) {
+      btn.textContent = "✓ Saved"
+      btn.classList.add("saved")
+      return
     }
+
+    // update ผ่าน users endpoint
+    const result = await axios.put(
+    `http://localhost:1337/api/users/${user.id}`,
+    { savedBooks: { connect: [{ id: book.id }] } },
+    { headers: { "Authorization": `Bearer ${getToken()}` } }
+    )
 
     btn.textContent = "✓ Saved"
     btn.classList.add("saved")

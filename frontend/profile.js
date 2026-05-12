@@ -56,22 +56,20 @@ async function loadProfile() {
     }
 }
 
-// ── Att läsa ──
+// reading list
 async function loadReadingList() {
   const container = document.getElementById("reading-list")
 
   try {
-    // ไม่ต้องส่ง filter — Strapi return แค่ของ user ที่ login อยู่เองค่ะ
-    const res = await apiGet(`/reading-lists?populate[books][populate]=cover`)
-    const lists = res.data
+    const res = await apiGet(`/users/me?populate[savedBooks][populate]=cover`)
+    const books = res.savedBooks || []
 
-    if (!lists || lists.length === 0 || !lists[0].books?.length) {
+    if (!books.length) {
       container.innerHTML = `<p class="empty-msg">No books saved yet — go find some! 🦆</p>`
       return
     }
 
-    readingListData = lists[0].books
-    readingListId = lists[0].documentId  // Strapi v5 ใช้ documentId
+    readingListData = books
     renderReadingList(readingListData)
 
   } catch (err) {
@@ -123,15 +121,14 @@ async function removeBook(bookId, btn) {
     btn.textContent = "Removing..."
     btn.disabled = true
 
-    const updatedBooks = readingListData
-      .filter(b => b.id !== bookId)
-      .map(b => b.id)
+    const user = getUser()
 
-    await apiPut(`/reading-lists/${readingListId}`, {
-      data: { books: updatedBooks }
-    })
+    await axios.put(
+      `http://localhost:1337/api/users/${user.id}`,
+      { savedBooks: { disconnect: [{ id: bookId }] } },
+      { headers: { "Authorization": `Bearer ${getToken()}` } }
+    )
 
-    // อัปเดต local data
     readingListData = readingListData.filter(b => b.id !== bookId)
     renderReadingList(readingListData)
 
@@ -141,6 +138,7 @@ async function removeBook(bookId, btn) {
     btn.disabled = false
   }
 }
+
 
 // ── Sort Att läsa ──
 function sortList(type) {

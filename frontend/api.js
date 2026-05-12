@@ -69,7 +69,10 @@ const apiDelete = async (path) => {
 const logout = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    window.location.replace("home.html")  // ← กลับ home แทน login
+    // ล้าง username ใน navbar ก่อน redirect
+    const navUsername = document.getElementById("nav-username")
+    if (navUsername) navUsername.textContent = ""
+    window.location.replace("home.html")
 }
 
 // load theme on page load

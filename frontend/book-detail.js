@@ -48,9 +48,9 @@ async function getMyReadingList() {
 async function isSaved(bookDocId) {
   if (!isLoggedIn()) return false
   try {
-    const list = await getMyReadingList()
-    if (!list) return false
-    return (list.books || []).some(b => b.documentId == bookDocId)
+    const res = await apiGet(`/users/me?populate[savedBooks][fields]=documentId`)
+    const savedBooks = res.savedBooks || []
+    return savedBooks.some(b => b.documentId === bookDocId)
   } catch { return false }
 }
 
@@ -62,28 +62,21 @@ async function handleSave(bookDocId, btn) {
   btn.textContent = "Saving..."
 
   try {
-    const list = await getMyReadingList()
+    const user = getUser()
+    
+    // ดึง numeric id ของหนังสือ
+    const bookRes = await apiGet(`/books/${bookDocId}`)
+    const book = bookRes.data
 
-    if (list) {
-      const existingIds = (list.books || []).map(b => b.documentId)
-      if (existingIds.includes(bookDocId)) {
-        btn.textContent = "✓ Saved to reading list"
-        btn.classList.add("saved-state")
-        btn.disabled = false
-        return
-      }
-      await apiPut(`/reading-lists/${list.documentId}`, {
-        data: { books: [...existingIds, bookDocId] }
-      })
-    } else {
-      await apiPost("/reading-lists", {
-        data: { books: [bookDocId] }
-      })
-    }
+    await axios.put(
+      `http://localhost:1337/api/users/${user.id}`,
+      { savedBooks: { connect: [{ id: book.id }] } },
+      { headers: { "Authorization": `Bearer ${getToken()}` } }
+    )
 
     btn.textContent = "✓ Saved to reading list"
     btn.classList.add("saved-state")
-    btn.disabled = false
+    btn.disabled = true
 
   } catch (err) {
     console.error(err)
@@ -111,7 +104,18 @@ async function submitRating(bookId, score, book) {
         if (existing >= 0) ratings[existing].score = score
         else               ratings.push({ userId: user.id, score })
 
-        await apiPut(`/books/${bookId}`, { data: { ratings } })
+        const currentBook = await apiGet(`/books/${bookId}?populate=savedByUsers`)
+        const savedUserIds = currentBook.data.savedByUsers?.map(u => ({ id: u.id })) || []
+
+        await apiPut(`/books/${bookId}`, { 
+            data: { 
+                ratings,
+                savedByUsers: { set: savedUserIds }
+            } 
+        })
+
+
+
 
         // คำนวณ avg ใหม่
         const avg = ratings.reduce((s, r) => s + r.score, 0) / ratings.length
@@ -140,7 +144,7 @@ function renderRatingBox(bookId, book, currentScore = 0) {
     `).join("")
 
     const hint = currentScore
-        ? `${currentScore} / 5 · click to change`
+        ? `${currentScore} / 5 `
         : `click to rate`
 
     return `
@@ -258,7 +262,7 @@ async function loadDetail() {
             })
             btn.addEventListener("mouseleave", () => {
                 btns.forEach(b => b.classList.toggle("active", Number(b.dataset.score) <= myRating))
-                hint.textContent = myRating ? `${myRating} / 5 · click to change` : "click to rate"
+                hint.textContent = myRating ? `${myRating} / 5` : "click to rate"
             })
             btn.addEventListener("click", () => submitRating(bookId, score, book))
             })

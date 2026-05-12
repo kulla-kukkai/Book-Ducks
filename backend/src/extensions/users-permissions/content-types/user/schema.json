@@ -66,15 +66,15 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "reading_list": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::reading-list.reading-list",
-      "mappedBy": "users_permissions_user"
-    },
     "isAdmin": {
       "type": "boolean",
       "default": false
+    },
+    "savedBooks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::book.book",
+      "mappedBy": "savedByUsers"
     }
   }
 }
