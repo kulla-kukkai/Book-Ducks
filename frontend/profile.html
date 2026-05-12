@@ -19,8 +19,8 @@
         <img src="logo.png" alt="BookDucks" height="44" />
     </a>
     <div class="nav-links">
-        <a href="books.html" class="btn-ghost">All Books</a>
         <span id="nav-username" class="nav-user"></span>
+        <a href="books.html" class="btn-ghost">All Books</a>
         <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">My Profile</a>
         <a href="admin.html" id="nav-admin" class="btn-ghost" style="display:none">Admin </a>
         <a href="#" id="nav-logout" class="btn-ghost" style="display:none" onclick="logout()">Logout</a>
@@ -30,11 +30,17 @@
 
   <!-- PROFILE HEADER -->
   <section class="profile-header">
-    <div class="container">
-      <div class="profile-avatar" id="profile-avatar">🦆</div>
-      <h1 class="profile-name" id="profile-name">Loading...</h1>
-      <p class="profile-email" id="profile-email"></p>
-    </div>
+      <div class="container profile-header-inner">
+          <div class="profile-left">
+              <div class="profile-avatar" id="profile-avatar"></div>
+          </div>
+          <div class="profile-right">
+              <p class="profile-greeting">Hi,</p>
+              <h1 class="profile-name" id="profile-name">Loading...</h1>
+              <p class="profile-tagline" id="profile-tagline"></p>
+              <p class="profile-email" id="profile-email"></p>
+          </div>
+      </div>
   </section>
 
   <!-- ATT LÄSA LIST -->

@@ -32,15 +32,28 @@ function updateNav() {
 
 // ── Profile Header ──
 async function loadProfile() {
-  try {
-    const user = await apiGet("/users/me")
-    document.getElementById("profile-name").textContent = user.username
-    document.getElementById("profile-email").textContent = user.email
-    // อัปเดต localStorage ด้วย
-    localStorage.setItem("user", JSON.stringify(user))
-  } catch (err) {
-    console.error("Profile error:", err)
-  }
+    try {
+        const user = await apiGet("/users/me")
+        document.getElementById("profile-name").textContent = user.username
+        document.getElementById("profile-email").textContent = user.email
+
+        // tagline สุ่ม
+        const taglines = [
+            "Ready to quack into your next book?",
+            "What the duck are you reading today?",
+            "Keep calm and read on, little duck!",
+            "Another day, another chapter! ",
+            "Your reading adventure continues...",
+            "Books are waiting, let's dive in! ",
+            "A duck who reads is a duck who leads!"
+        ]
+        const random = taglines[Math.floor(Math.random() * taglines.length)]
+        document.getElementById("profile-tagline").textContent = random
+
+        localStorage.setItem("user", JSON.stringify(user))
+    } catch (err) {
+        console.error("Profile error:", err)
+    }
 }
 
 // ── Att läsa ──
@@ -225,3 +238,4 @@ function sortRated(type) {
 // เริ่มทำงาน
 loadTheme()
 init()
+document.querySelector('a[href="profile.html"]')?.classList.add("nav-active")

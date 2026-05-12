@@ -6,7 +6,8 @@ let currentSort = 'title'  // sort ปัจจุบัน
 function updateNav() {
   const user = getUser()
   if (user) {
-    document.getElementById("nav-username").textContent = `Hi, ${user.username}`
+    const navUsername = document.getElementById("nav-username")
+    if (navUsername) navUsername.textContent = `Hi, ${user.username}`
     document.getElementById("nav-logout").style.display = "inline"
     document.getElementById("nav-login").style.display = "none"
 
@@ -175,3 +176,4 @@ document.getElementById("search-input").addEventListener("input", applyFilters)
 loadTheme()
 updateNav()
 loadBooks()
+document.querySelector('a[href="books.html"]')?.classList.add("nav-active")

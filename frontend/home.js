@@ -99,10 +99,6 @@ function renderStars(rating, max = 5) {
     return html
 }
 
-loadTheme()
-updateNav()
-loadBooks()
-
 // CAROUSEL
 function initCarousel() {
     const track = document.getElementById("books-grid")
@@ -164,3 +160,7 @@ window.goToStep = (i) => {
     const visibleCards = Math.floor(track.clientWidth / cardWidth)
     track.scrollTo({ left: i * cardWidth * visibleCards, behavior: "smooth" })
 }
+
+loadTheme()
+updateNav()
+loadBooks()

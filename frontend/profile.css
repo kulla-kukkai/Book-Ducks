@@ -1,32 +1,54 @@
-/* ============================================
-   profile.css — หน้า Profile เท่านั้น
-   ============================================ */
-
 /* PROFILE HEADER */
 .profile-header {
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  padding: 3rem 2rem 2.5rem;
-  text-align: center;
+    background: var(--color-bg); 
+    padding: 2.5rem 0;
 }
 
-.profile-avatar {
-  font-size: 4rem;
-  margin-bottom: 0.75rem;
-  line-height: 1;
+.profile-header-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
+    background: var(--color-page-header); 
+    border-radius: 24px;
+    max-width: 1300px;
+}
+
+.profile-left {
+    font-size: 5rem;
+    line-height: 1;
+}
+
+.profile-right { flex: 1; }
+
+.profile-greeting {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0;
 }
 
 .profile-name {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.profile-tagline {
+    font-family: var(--font-title);
+    font-size: 22px;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
 }
 
 .profile-email {
-  font-size: 14px;
-  color: var(--color-text-muted);
+    font-family: var(--font-title);
+    font-size: 20px;
+    color: var(--color-text-muted);
+    opacity: 0.7;
 }
 
 /* STATS ROW (optional) */

@@ -4,7 +4,7 @@ body.christmas {
     --color-surface:      #FFFFFF;
     --color-border:       #F5C5C5;
     --color-text:         #1C1C1A;
-    --color-text-muted:   #9A8880;
+    --color-text-muted:   #f8e5dd;
     --color-accent:       #2C5F2E;  
     --color-accent-light: #EBF5EB;
     --color-duck-yellow:  #ffe14b;
@@ -18,11 +18,11 @@ body.halloween {
     --color-surface:      #16213E;
     --color-border:       #4A3F6B;
     --color-text:         #5c4735;
-    --color-text-muted:   #9A8FB5;
+    --color-text-muted:   #e5dff1;
     --color-accent:       #FF6B00;
     --color-accent-light: #2D1F00;
     --color-books-bg:     #0D0D1A; 
-    --color-page-header: #FF6B00;
+    --color-page-header: #9f4826;
 }
 
 /* === DEFAULT === */

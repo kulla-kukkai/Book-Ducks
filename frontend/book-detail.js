@@ -1,8 +1,3 @@
-// ============================================================
-// book-detail.js — BookDucks Book Detail Page
-// โหลดหนังสือ + avg rating + save to read + user rating
-// ============================================================
-
 const bookId = new URLSearchParams(location.search).get("id")
 if (!bookId) location.href = "home.html"
 
@@ -13,11 +8,18 @@ function updateNav() {
     const navProfile  = document.getElementById("nav-profile")
     const navLogout   = document.getElementById("nav-logout")
     const navLogin    = document.getElementById("nav-login")
+    const navAdmin    = document.getElementById("nav-admin")
     if (isLoggedIn() && user) {
         navUsername.textContent = `Hi, ${user.username}`
-        if (navProfile) navProfile.style.display = "inline-block"
         if (navLogout)  navLogout.style.display  = "inline-block"
         if (navLogin)   navLogin.style.display   = "none"
+
+        if (isAdmin()) {
+            if (navAdmin)   navAdmin.style.display   = "inline-block"
+            if (navProfile) navProfile.style.display = "none" 
+        } else {
+            if (navProfile) navProfile.style.display = "inline-block"
+        }
     }
 }
 
@@ -187,19 +189,23 @@ async function loadDetail() {
         const savedBtnText = saved ? "✓ Saved to reading list" : "🔖 Save to reading list"
         const savedBtnClass = saved ? "btn-primary btn-full saved-state" : "btn-primary btn-full"
 
-        const actionsHtml = isLoggedIn()
-        ? `<button class="${savedBtnClass}" id="save-btn" ${saved ? "disabled" : ""}>${savedBtnText}</button>`
-        : `<a href="login.html" class="btn-ghost btn-full" style="text-align:center;display:block">Login to save</a>`
+        const actionsHtml = isAdmin()
+            ? `<button class="btn-primary btn-full" disabled style="opacity:0.4;cursor:not-allowed">🔖 Save to reading list</button>`
+            : isLoggedIn()
+                ? `<button class="${savedBtnClass}" id="save-btn" ${saved ? "disabled" : ""}>${savedBtnText}</button>`
+                : `<a href="login.html" class="btn-ghost btn-full" style="text-align:center;display:block">Login to save</a>`
 
         const avgHtml = avgRating !== null
         ? `<div class="stars-display">${starsHtml(avgRating)}</div> <span style="font-weight:700">${avgRating.toFixed(1)}</span>`
         : `<span style="color:var(--color-text-muted);font-size:14px">No ratings yet</span>`
 
-        const ratingSection = isLoggedIn()
-        ? renderRatingBox(bookId, book, myRating)
-        : `<div class="rating-box"><p class="rating-box-label">RATING</p><p class="rating-login-prompt"><a href="login.html">Login</a> to rate this book</p></div>`
+        const ratingSection = isAdmin()
+            ? ``
+            : isLoggedIn()
+                ? renderRatingBox(bookId, book, myRating)
+                : `<div class="rating-box"><p class="rating-box-label">RATING</p><p class="rating-login-prompt"><a href="login.html">Login</a> to rate this book</p></div>`
+                document.getElementById("detail-content").innerHTML = `
 
-        document.getElementById("detail-content").innerHTML = `
         <!-- LEFT -->
         <div>
             ${coverHtml}
