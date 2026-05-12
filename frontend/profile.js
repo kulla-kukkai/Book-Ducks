@@ -141,10 +141,10 @@ async function removeBook(bookId, btn) {
 
 
 // ── Sort Att läsa ──
-function sortList(type) {
-  document.querySelectorAll("#reading-list ~ * .sort-btn, .sort-controls .sort-btn")
+function sortList(type, btn) {
+  document.querySelectorAll(".sort-controls .sort-btn")
     .forEach(b => b.classList.remove("active"))
-  event.target.classList.add("active")
+  btn.classList.add("active")
 
   const sorted = [...readingListData].sort((a, b) => {
     if (type === "title")  return (a.title || "").localeCompare(b.title || "")
@@ -217,11 +217,11 @@ function renderRatedBooks(books) {
 }
 
 // ── Sort Rated ──
-function sortRated(type) {
-  event.target.closest(".sort-controls")
+function sortRated(type, btn) {
+  btn.closest(".sort-controls")
     .querySelectorAll(".sort-btn")
     .forEach(b => b.classList.remove("active"))
-  event.target.classList.add("active")
+  btn.classList.add("active")
 
   const sorted = [...ratedBooksData].sort((a, b) => {
     if (type === "title")  return (a.title || "").localeCompare(b.title || "")

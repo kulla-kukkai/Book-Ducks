@@ -49,8 +49,8 @@
       <h2 class="section-title"> My To-Read List </h2>
       <div class="sort-controls">
         <span class="sort-label">Sort by:</span>
-        <button class="sort-btn active" onclick="sortList('title')">Title</button>
-        <button class="sort-btn" onclick="sortList('author')">Author</button>
+        <button class="sort-btn active" onclick="sortList('title', this)">Title</button>
+        <button class="sort-btn" onclick="sortList('author', this)">Author</button>
       </div>
     </div>
 
@@ -63,9 +63,9 @@
       <h2 class="section-title">My Rated Books ⭐</h2>
       <div class="sort-controls">
         <span class="sort-label">Sort by:</span>
-        <button class="sort-btn active" onclick="sortRated('title')">Title</button>
-        <button class="sort-btn" onclick="sortRated('author')">Author</button>
-        <button class="sort-btn" onclick="sortRated('rating')">Rating</button>
+        <button class="sort-btn active" onclick="sortRated('title', this)">Title</button>
+        <button class="sort-btn" onclick="sortRated('author', this)">Author</button>
+        <button class="sort-btn" onclick="sortRated('rating', this)">Rating</button>
       </div>
     </div>
 
