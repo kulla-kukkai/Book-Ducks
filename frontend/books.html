@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Books — BookDucks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fira+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700&family=Quattrocento+Sans:wght@0,400;0,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="themes.css" />
+  <link rel="stylesheet" href="books.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/frontend/home.html" class="nav-logo">
+      <img src="logo.png" alt="BookDucks" />
+    </a>
+    <div class="nav-links">
+        <span id="nav-username" class="nav-user"></span>
+        <a href="books.html" class="btn-ghost">All Books</a>
+        <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">My Profile</a>
+        <a href="admin.html" id="nav-admin" class="btn-ghost" style="display:none">Admin </a>
+        <a href="#" id="nav-logout" class="btn-ghost" style="display:none" onclick="logout()">Logout</a>
+        <a href="login.html" id="nav-login" class="btn-primary">Login</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">All Books</h1>
+      <p class="page-sub" id="book-count">Loading...</p>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <div class="container">
+      <div class="filters-inner">
+
+        <!-- Search -->
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search by title or author..."
+          />
+        </div>
+
+        <!-- Sort -->
+        <div class="sort-wrap">
+          <span class="sort-label">Sort:</span>
+          <button class="sort-btn active" onclick="setSort('title', this)">Title A–Z</button>
+          <button class="sort-btn" onclick="setSort('author', this)">Author</button>
+          <button class="sort-btn" onclick="setSort('pages', this)">Pages</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKS GRID -->
+  <main class="container">
+    <div id="books-grid" class="books-grid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="empty-state" style="display:none">
+      <p class="empty-icon">🦆</p>
+      <p class="empty-text">No books found — try a different search!</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>BookDucks — Read more, quack more</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api.js"></script>
+  <script src="books.js"></script>
+</body>
+</html>

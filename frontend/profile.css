@@ -1,0 +1,174 @@
+/* PROFILE HEADER */
+.profile-header {
+    background: var(--color-bg); 
+    padding: 2.5rem 0;
+}
+
+.profile-header-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
+    background: var(--color-page-header); 
+    border-radius: 24px;
+    max-width: 1300px;
+}
+
+.profile-left {
+    font-size: 5rem;
+    line-height: 1;
+}
+
+.profile-right { flex: 1; }
+
+.profile-greeting {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0;
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.profile-tagline {
+    font-family: var(--font-title);
+    font-size: 22px;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+}
+
+.profile-email {
+    font-family: var(--font-title);
+    font-size: 20px;
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
+/* STATS ROW (optional) */
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  display: block;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* SECTION */
+.profile-section {
+  margin-bottom: 3rem;
+}
+
+/* EMPTY STATE */
+.empty-msg {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  padding: 2rem 0;
+  grid-column: 1 / -1;
+}
+
+/* REMOVE BUTTON */
+.btn-remove {
+  color: #DC2626 !important;
+  border-color: #FECACA !important;
+  font-size: 12px !important;
+}
+.btn-remove:hover {
+  background: #FEF2F2 !important;
+  border-color: #DC2626 !important;
+}
+
+/* BOOK CARD ใน profile — เหมือนกัน แต่ไม่มี hover lift มาก */
+.book-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.book-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.book-cover {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+}
+.book-cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  background: var(--color-accent-light);
+}
+.book-info {
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+.book-title {
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.book-author { font-size: 12px; color: var(--color-text-muted); }
+.book-meta   { font-size: 11px; color: var(--color-text-muted); margin-top: auto; padding-top: 0.4rem; }
+.book-actions { margin-top: 0.5rem; }
+
+/* RATED BOOKS — VG */
+.rated-empty {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-style: italic;
+  padding: 1.5rem 0;
+}
+
+/* BOOKS GRID */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .profile-header { padding: 2rem 1rem; }
+  .profile-name { font-size: 1.5rem; }
+  .profile-stats { gap: 1.5rem; }
+}
