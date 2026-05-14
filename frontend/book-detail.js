@@ -106,8 +106,7 @@ async function submitRating(bookId, score, book) {
 
         await apiPut(`/books/${bookId}`, { 
             data: { 
-                ratings,
-                savedByUsers: { set: savedUserIds }
+                ratings
             } 
         })
 
