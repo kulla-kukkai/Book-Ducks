@@ -1,4 +1,11 @@
-const BASE_URL = "http://localhost:1337/api"
+function getBaseUrl() {
+    if (window.location.hostname === "localhost") {
+        return "http://localhost:1337/api";
+    }
+    return "https://artistic-trust-b9fbf19bd7.strapiapp.com/api";
+}
+
+const BASE_URL = getBaseUrl();
 
 // ── Token helpers ──
 const getToken   = () => localStorage.getItem("token")
