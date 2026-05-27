@@ -68,10 +68,14 @@ async function handleSave(bookDocId, btn) {
         const bookRes = await apiGet(`/books/${bookDocId}`)
         const book = bookRes.data
 
+        const strapiBase = window.location.hostname === "localhost"
+            ? "http://localhost:1337"
+            : "https://artistic-trust-b9fbf19bd7.strapiapp.com"
+
         await axios.put(
-        `http://localhost:1337/api/users/${user.id}`,
-        { savedBooks: { connect: [{ id: book.id }] } },
-        { headers: { "Authorization": `Bearer ${getToken()}` } }
+            `${strapiBase}/api/users/${user.id}`,
+            { savedBooks: { connect: [{ id: book.id }] } },
+            { headers: { "Authorization": `Bearer ${getToken()}` } }
         )
 
         btn.textContent = "✓ Saved to reading list"
