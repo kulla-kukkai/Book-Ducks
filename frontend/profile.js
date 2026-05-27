@@ -90,9 +90,7 @@ function renderReadingList(books) {
   }
 
   container.innerHTML = books.map(book => {
-    const coverUrl = book.cover?.url
-      ? `http://localhost:1337${book.cover.url}`
-      : null
+    const coverUrl = getStrapiMediaUrl(book.cover?.url)
 
     return `
       <div class="book-card">
@@ -193,9 +191,7 @@ function renderRatedBooks(books) {
   }
 
   container.innerHTML = books.map(book => {
-    const coverUrl = book.cover?.url
-      ? `http://localhost:1337${book.cover.url}`
-      : null
+    const coverUrl = getStrapiMediaUrl(book.cover?.url)
 
     const stars = "★".repeat(book.myScore) + "☆".repeat(5 - book.myScore)
 

@@ -61,7 +61,7 @@ function renderCard(book) {
     const author   = book.author   || ""
     const pages    = book.pages    || ""
     const published = book.publishedDate ? book.publishedDate.slice(0, 4) : ""
-    const coverUrl = book.cover?.url ? `http://localhost:1337${book.cover.url}` : null
+    const coverUrl = getStrapiMediaUrl(book.cover?.url)
 
     // คำนวณ avg จาก ratings array เหมือน books.js
     const ratings = book.ratings || []

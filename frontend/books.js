@@ -54,9 +54,7 @@ function renderBooks(books) {
   grid.innerHTML = books.map(book => {
     const { title, author, pages, publishedDate, cover, averageRating } = book
 
-    const coverUrl = cover?.url
-      ? `http://localhost:1337${cover.url}`
-      : null
+    const coverUrl = getStrapiMediaUrl(cover?.url)
 
     const ratings = book.ratings || []
     const avg = ratings.length

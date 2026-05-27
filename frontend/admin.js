@@ -47,7 +47,7 @@ async function loadBooks() {
 }
 
 function renderBookRow(book) {
-    const coverUrl = book.cover?.url ? `http://localhost:1337${book.cover.url}` : null
+    const coverUrl = getStrapiMediaUrl(book.cover?.url)
     const year = book.publishedDate ? book.publishedDate.slice(0, 4) : "—"
 
     return `

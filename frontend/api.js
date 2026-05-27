@@ -5,6 +5,14 @@ function getBaseUrl() {
     return "https://artistic-trust-b9fbf19bd7.strapiapp.com/api";
 }
 
+function getStrapiMediaUrl(url) {
+    if (!url) return null
+    const strapiBase = window.location.hostname === "localhost"
+        ? "http://localhost:1337"
+        : "https://artistic-trust-b9fbf19bd7.strapiapp.com"
+    return `${strapiBase}${url}`
+}
+
 const BASE_URL = getBaseUrl();
 
 // ── Token helpers ──
@@ -99,8 +107,8 @@ const loadTheme = async () => {
         const heroImg   = data[`hero_${theme}`]   || data.hero_default
         const bannerImg = data[`banner_${theme}`] || data.banner_default
 
-        const heroUrl   = heroImg?.url   ? `http://localhost:1337${heroImg.url}`   : null
-        const bannerUrl = bannerImg?.url ? `http://localhost:1337${bannerImg.url}` : null
+        const heroUrl = getStrapiMediaUrl(heroImg?.url)
+        const bannerUrl = getStrapiMediaUrl(bannerImg?.url)
 
         // change hero background via CSS
         if (heroUrl) {

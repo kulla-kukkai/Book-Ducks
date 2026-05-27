@@ -166,7 +166,7 @@ async function loadDetail() {
         const published  = book.publishedYear || null
         const genre      = book.genre       || null
         const description= book.description || ""
-        const coverUrl   = book.cover?.url  ? `http://localhost:1337${book.cover.url}` : null
+        const coverUrl   = getStrapiMediaUrl(book.cover?.url)
 
         // avg rating จาก ratings array
         const ratings    = book.ratings || []
