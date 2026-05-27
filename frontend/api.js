@@ -7,6 +7,8 @@ function getBaseUrl() {
 
 function getStrapiMediaUrl(url) {
     if (!url) return null
+    // ถ้า URL เป็น full URL อยู่แล้ว ไม่ต้องต่ออะไร
+    if (url.startsWith("http")) return url
     const strapiBase = window.location.hostname === "localhost"
         ? "http://localhost:1337"
         : "https://artistic-trust-b9fbf19bd7.strapiapp.com"
