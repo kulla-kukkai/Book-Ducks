@@ -83,7 +83,7 @@ async function handleLogin() {
 
   try {
     // Step 1: login → ได้ jwt
-    const res = await axios.post(`http://localhost:1337/api/auth/local`, {
+    const res = await axios.post(`${BASE_URL}/auth/local`, {
     identifier: email,
     password:   password,
     })
@@ -139,7 +139,7 @@ async function handleRegister() {
   btn.textContent = "Creating account..."
 
   try {
-    await axios.post(`http://localhost:1337/api/auth/local/register`, { username, email, password })
+    await axios.post(`${BASE_URL}/auth/local/register`, { username, email, password })
     switchTab("login")
     showError("✓ Account created! Please log in.", true)
   } catch (err) {
