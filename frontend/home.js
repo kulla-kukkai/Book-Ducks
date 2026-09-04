@@ -51,7 +51,7 @@ async function loadBooks() {
     } catch (err) {
         console.error("Load error:", err)
         document.getElementById("books-grid").innerHTML =
-        `<p style="color:crimson">Cannot connect to Strapi — make sure it's running on localhost:1337</p>`
+        `<p style="color:crimson">Cannot connect to Strapi </p>`
     }
 }
  

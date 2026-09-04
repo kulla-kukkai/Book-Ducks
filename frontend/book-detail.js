@@ -70,7 +70,7 @@ async function handleSave(bookDocId, btn) {
 
         const strapiBase = window.location.hostname === "localhost"
             ? "http://localhost:1337"
-            : "https://artistic-trust-b9fbf19bd7.strapiapp.com"
+            : "https://book-ducks-backend.onrender.com"
 
         await axios.put(
             `${strapiBase}/api/users/${user.id}`,
