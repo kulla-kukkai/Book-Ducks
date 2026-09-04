@@ -36,6 +36,7 @@ Final project for the **Interaction with CMS** course at Nackademin.
 | Database | PostgreSQL (Neon) |
 | Frontend Hosting | Netlify |
 | Backend Hosting | Render |
+| Image storage| Cloudinary  |
 | Version Control | GitHub |
  
 ---
