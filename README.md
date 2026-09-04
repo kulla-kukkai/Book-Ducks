@@ -1,41 +1,57 @@
 # 🦆 BookDucks
 
-A full-stack web application for a bookstore where users can browse books, save their reading list, and rate books. Built with Vanilla JavaScript and Strapi v5.
+A full-stack web application for a bookstore where users can browse books, save their reading list, and rate books. Built with Vanilla JavaScript and Strapi v5. Admins can add, edit, and delete books directly from the website.
+ 
+Final project for the **Interaction with CMS** course at Nackademin.
 
 ---
 
 ## ✨ Features
-
-### Public
-- Browse all books with cover images, author, pages, and published date
-- Register and log in
-
-### Logged-in Users
-- See which user is logged in, with logout option
-- Save books to a personal **"Att läsa"** (To-Read) reading list
-- Rate books with a 1–5 star rating system
-- View profile page with:
-  - Reading list (sortable by title and author)
-  - Rated books list (sortable by title, author, and rating)
-  - Remove books from reading list
-
+ 
+### Guest
+- Browse all books in the library
+- Search and sort books
+- View book details
+### User (logged in)
+- Register and login
+- Save books to reading list
+- Rate books (1-5 stars)
+- View personal profile and reading list
 ### Admin
 - Access to admin panel via the website
+- Add, edit, and delete books
+- Upload book cover images
 - Upload new books directly from the frontend
+- Manage all content via CMS admin panel
 - Theme is controlled from Strapi — admin can switch between **default**, **christmas**, and **halloween** themes
 
 ---
 
-## 🛠 Tech Stack
-
-| Layer | Technology |
+## 🛠️ Tech Stack
+ 
+| Part | Technology |
 |---|---|
-| Frontend | Vanilla JavaScript, HTML, CSS |
-| HTTP Client | Axios (CDN) |
+| Frontend | HTML, CSS, Vanilla JavaScript |
 | Backend / CMS | Strapi v5 |
-| Database | SQLite |
-| Dev Server | Live Server (port 5500) |
-
+| Database | PostgreSQL (Neon) |
+| Frontend Hosting | Netlify |
+| Backend Hosting | Render |
+| Version Control | GitHub |
+ 
+---
+ 
+## 🚀 How to Run Locally
+ 
+### Backend
+```bash
+cd backend
+npm install
+npm run develop
+```
+Strapi runs at: http://localhost:1337
+ 
+### Frontend
+Open `frontend/home.html` in a browser or use VS Code Live Server.
 ---
 
 ## 📁 Project Structure
@@ -88,28 +104,6 @@ backend/ (Strapi v5)
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js
-- npm
-
-### 1. Start Strapi Backend
-
-```bash
-cd backend
-npm install
-npm run develop
-```
-
-Strapi runs at: `http://localhost:1337`
-
-### 2. Start Frontend
-
-Open `frontend/home.html` with **Live Server** (VS Code extension) on port `5500`.
-
----
-
 ## 🔐 Strapi Permissions Setup
 
 ### Public Role
@@ -142,4 +136,8 @@ Themes are managed entirely from Strapi's admin panel under **SiteSetting**. Cha
 
 ---
 
-*BookDucks — Read more, quack more 🦆*
+## 🔗 Links
+ 
+- **GitHub:** https://github.com/kulla-kukkai/Book-Ducks
+- **Frontend:** https://book-ducks.netlify.app
+- *BookDucks — Read more, quack more 🦆*
