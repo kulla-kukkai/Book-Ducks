@@ -1,8 +1,8 @@
 function getBaseUrl() {
     if (window.location.hostname === "localhost") {
-        return "http://localhost:1337/api";
+        return "https://book-ducks-backend.onrender.com/api";
     }
-    return "https://artistic-trust-b9fbf19bd7.strapiapp.com/api";
+    return "https://book-ducks-backend.onrender.com/api";
 }
 
 function getStrapiMediaUrl(url) {
@@ -11,7 +11,7 @@ function getStrapiMediaUrl(url) {
     if (url.startsWith("http")) return url
     const strapiBase = window.location.hostname === "localhost"
         ? "http://localhost:1337"
-        : "https://artistic-trust-b9fbf19bd7.strapiapp.com"
+        : "https://book-ducks-backend.onrender.com"
     return `${strapiBase}${url}`
 }
 
