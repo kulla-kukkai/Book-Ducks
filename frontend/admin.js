@@ -93,7 +93,7 @@ async function uploadBook() {
             const formData = new FormData()
             formData.append("files", cover)
             const uploadRes = await axios.post(
-                `http://localhost:1337/api/upload`,
+                `${BASE_URL.replace("/api", "")}/api/upload`,
                 formData,
                 { headers: { "Authorization": `Bearer ${getToken()}` } }
             )
