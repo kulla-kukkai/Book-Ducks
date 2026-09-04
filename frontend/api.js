@@ -1,6 +1,6 @@
 function getBaseUrl() {
     if (window.location.hostname === "localhost") {
-        return "https://book-ducks-backend.onrender.com/api";
+        return "http://localhost:1337/api";
     }
     return "https://book-ducks-backend.onrender.com/api";
 }
